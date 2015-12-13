@@ -1,7 +1,9 @@
 package nu.njp.receptinator.service;
 
-import javax.ejb.Stateless;
-
+/**
+ * Authentication service interface
+ * @author Daniel Ryhle <daniel@ryhle.se>
+ */
 public interface AuthenticationService {
     String authenticate(String userName, String password);
 }

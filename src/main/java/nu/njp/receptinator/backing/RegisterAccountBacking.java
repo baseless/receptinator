@@ -9,7 +9,8 @@ import javax.inject.Named;
 import java.io.IOException;
 
 /**
- * Created by base on 2015-12-13.
+ * Register backing bean
+ * @author Daniel Ryhle <daniel@ryhle.se>
  */
 @Named("registerAccount")
 @RequestScoped

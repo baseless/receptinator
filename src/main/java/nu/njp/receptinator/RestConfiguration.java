@@ -3,7 +3,8 @@ package nu.njp.receptinator;
 import javax.ws.rs.ApplicationPath;
 
 /**
- * Created by base on 2015-12-12.
+ * REST application class
+ * @author Daniel Ryhle <daniel@ryhle.se>
  */
 @ApplicationPath("resources")
 public class RestConfiguration {

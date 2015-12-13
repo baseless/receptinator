@@ -1,15 +1,13 @@
 package nu.njp.receptinator.core;
 
 import nu.njp.receptinator.entity.Account;
-
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import java.io.IOException;
 import java.io.Serializable;
 
 /**
- * Created by base on 2015-12-13.
+ * Authentication provider
+ * @author Daniel Ryhle <daniel@ryhle.se>
  */
 @Named
 @SessionScoped

@@ -3,7 +3,6 @@ package nu.njp.receptinator.core.filter;
 import nu.njp.receptinator.core.AuthenticationProvider;
 import nu.njp.receptinator.core.qualifier.DefaultLogger;
 import org.slf4j.Logger;
-
 import javax.inject.Inject;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -12,7 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by base on 2015-12-13.
+ * Servlet authentication filter
+ * @author Daniel Ryhle <daniel@ryhle.se>
  */
 @WebFilter("/*")
 public class AuthenticationFilter implements Filter {

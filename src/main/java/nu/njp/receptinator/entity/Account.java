@@ -7,10 +7,12 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
- * Created by base on 2015-12-13.
+ * Account entity
+ * @author Daniel Ryhle <daniel@ryhle.se>
  */
 @Entity
 @Table(name = "accounts")
+@NamedQueries({ })
 public class Account implements Serializable {
 
     public Account() {

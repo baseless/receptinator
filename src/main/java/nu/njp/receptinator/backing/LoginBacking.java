@@ -7,7 +7,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
- * Created by base on 2015-12-13.
+ * Login backing bean
+ * @author Daniel Ryhle <daniel@ryhle.se>
  */
 @Named
 @RequestScoped
