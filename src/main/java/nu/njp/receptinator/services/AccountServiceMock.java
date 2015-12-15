@@ -22,7 +22,7 @@ public class AccountServiceMock implements AccountService {
 
     @Override
     public JsfMessage addAccount(Account account) {
-        return new JsfMessage(null, null, JsfMessage.MessageType.SUCCESS);
+        return new JsfMessage("Account created!", "Account successfully created, please login.", JsfMessage.MessageType.SUCCESS);
     }
 
 }

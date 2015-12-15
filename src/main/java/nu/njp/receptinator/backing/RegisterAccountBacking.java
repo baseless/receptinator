@@ -1,10 +1,13 @@
 package nu.njp.receptinator.backing;
 
 import nu.njp.receptinator.core.JsfMessage;
+import nu.njp.receptinator.core.qualifier.Mocked;
 import nu.njp.receptinator.entities.Account;
+import nu.njp.receptinator.interfaces.AccountService;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.Basic;
 import javax.validation.constraints.NotNull;
@@ -18,6 +21,9 @@ import javax.validation.constraints.Size;
 @RequestScoped
 public class RegisterAccountBacking extends BackingBase {
 
+    @Inject @Mocked
+    AccountService accountService;
+
     @Named("newAccount")
     @Produces
     @RequestScoped
@@ -29,10 +35,8 @@ public class RegisterAccountBacking extends BackingBase {
     private String passwordConfirm;
 
     public String save() {
-        //setMessageTitle("Username taken!");
-        //setMessageDescription("Selected username already taken, plase select another.");
-        //setMessageType(MessageType.ERROR);
-        setMessage(new JsfMessage("Account created!", "Account successfully created, please login.", JsfMessage.MessageType.SUCCESS));
+        JsfMessage result = accountService.addAccount(account);
+        setMessage(result);
         return null;
     }
 
