@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class AuthenticationProvider implements Serializable {
 
     //@Inject
-    //AuthenticationService authenticationService;
+    //AuthenticationServiceLocal authenticationService;
 
     private Account account = null;
 
@@ -27,5 +27,9 @@ public class AuthenticationProvider implements Serializable {
             e.printStackTrace();
         } */
         return account != null;
+    }
+
+    public boolean authenticate(String userName, String password) {
+        return  true;
     }
 }

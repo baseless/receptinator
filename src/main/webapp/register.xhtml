@@ -4,16 +4,47 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <ui:composition template="/WEB-INF/templates/main.xhtml">
 
     <ui:define name="content">
-        <h1>Register account</h1>
         <h:form>
-            <h:outputLabel value="Username: "></h:outputLabel><h:inputText id="userNameField" value="#{newAccount.userName}"><f:passThroughAttribute name="placeHolder" value="4-50 characters"/></h:inputText> <h:message for="userNameField" /><br/>
-            <h:outputLabel value="Password: "></h:outputLabel><h:inputText id="passwordField" value="#{newAccount.password}"><f:passThroughAttribute name="placeHolder" value="6-200 characters"/></h:inputText> <h:message for="passwordField" /><br/>
-
-            <h:commandButton value="Create account" action="#{registerAccount.saveAccount}"><f:ajax execute="@form" render="@form" /></h:commandButton><h:commandButton value="Cancel" action="#{index}"></h:commandButton>
+            <div class="row-fluid">
+                <div class="col-xs-4"></div>
+                <div class="col-xs-4">
+                    <h:form>
+                        <h3>Register account</h3>
+                        <div class="form-group">
+                            <c:if test="#{registerAccount.errorTitle ne null}">
+                                <div class="alert alert-danger"><span class="glyphicon glyphicon glyphicon-alert" style="padding-right: 6px;"></span><strong>#{registerAccount.errorTitle}</strong> #{registerAccount.errorDescription}</div>
+                            </c:if>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="Username"></h:outputLabel>
+                            <h:inputText id="userName" styleClass="form-control" value="#{newAccount.userName}"></h:inputText>
+                            <h:message styleClass="label label-danger" for="userName" />
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="Password"></h:outputLabel>
+                            <h:inputSecret id="password" styleClass="form-control" value="#{newAccount.password}"></h:inputSecret>
+                            <h:message styleClass="label label-danger" for="password" />
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="Confirm password"></h:outputLabel>
+                            <h:inputSecret id="passwordConfirm" styleClass="form-control" value="#{registerAccount.passwordConfirm}"></h:inputSecret>
+                            <h:message styleClass="label label-danger" for="passwordConfirm" />
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="Email address"></h:outputLabel>
+                            <h:inputText id="email" styleClass="form-control" value="#{newAccount.email}"></h:inputText>
+                            <h:message styleClass="label label-danger" for="email" />
+                        </div>
+                        <h:commandButton style="margin-right: 5px;" styleClass="btn btn-success" value="Create account" action="#{createAccount.save}"><f:ajax execute="@form" render="@form" /></h:commandButton>
+                        <h:button styleClass="btn btn-default" immediate="true" value="Cancel" outcome="index"></h:button>
+                    </h:form>
+                </div>
+                <div class="col-xs-4"></div>
+            </div>
         </h:form>
     </ui:define>
 </ui:composition>

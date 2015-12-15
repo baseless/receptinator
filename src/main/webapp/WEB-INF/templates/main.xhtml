@@ -3,15 +3,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title><ui:insert name="head">#{bundle['site.default.title']}</ui:insert></title>
+        <link href="#{request.contextPath}/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="#{request.contextPath}/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
         <link href="#{request.contextPath}/css/site.css" rel="stylesheet" type="text/css"/>
     </h:head>
 
     <h:body>
-        <div id="container">
-            <div id="content">
-                <ui:insert name="content"></ui:insert>
-            </div>
-            <div id="footer"><ui:insert name="footer">#{bundle['site.default.footer']}</ui:insert></div>
+        <div class="container-fluid">
+            <ui:insert name="content"></ui:insert>
+            <div class="row-fluid" id="footer"><ui:insert name="footer">#{bundle['site.default.footer']}</ui:insert></div>
         </div>
     </h:body>
 </html>

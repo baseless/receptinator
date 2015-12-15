@@ -6,7 +6,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import java.io.IOException;
+import javax.persistence.Basic;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Register backing bean
@@ -21,13 +23,42 @@ public class RegisterAccountBacking {
     @RequestScoped
     private Account account = new Account();
 
-    public void saveAccount() {
+    private String errorTitle;
+    private String errorDescription;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 6, max = 200)
+    private String passwordConfirm;
+
+    public String save() {
         //save account
         //If successful
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("member/index.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        return null;
+    }
+
+    public String getErrorTitle() {
+        return errorTitle;
+    }
+
+    public void setErrorTitle(String errorTitle) {
+        this.errorTitle = errorTitle;
+    }
+
+    public String getErrorDescription() {
+        return errorDescription;
+    }
+
+    public void setErrorDescription(String errorDescription) {
+        this.errorDescription = errorDescription;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 }
