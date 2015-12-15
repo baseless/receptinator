@@ -13,9 +13,6 @@ import java.io.Serializable;
 @SessionScoped
 public class AuthenticationProvider implements Serializable {
 
-    //@Inject
-    //AuthenticationServiceLocal authenticationService;
-
     private Account account = null;
 
     public boolean isAuthenticated() {
@@ -30,6 +27,6 @@ public class AuthenticationProvider implements Serializable {
     }
 
     public boolean authenticate(String userName, String password) {
-        return  true;
+        return  false;
     }
 }

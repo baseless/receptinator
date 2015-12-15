@@ -1,5 +1,9 @@
 package nu.njp.receptinator.backing;
 
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+
 /**
  * Abstract base class for all backing beans
  * @author Daniel Ryhle <daniel@ryhle.se>
@@ -35,4 +39,12 @@ public abstract class BackingBase {
     public void setMessageType(MessageType messageType) {
         this.messageType = messageType;
     }
+
+    protected FacesContext getContext() {
+        return FacesContext.getCurrentInstance();
+    }
+
+    protected HttpServletRequest getRequest() { return (HttpServletRequest) getContext().getExternalContext().getRequest(); }
+
+    protected void redirect(String path) throws IOException { getContext().getExternalContext().redirect(path); }
 }

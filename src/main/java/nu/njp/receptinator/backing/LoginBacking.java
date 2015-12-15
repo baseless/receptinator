@@ -1,13 +1,15 @@
 package nu.njp.receptinator.backing;
 
 import nu.njp.receptinator.core.AuthenticationProvider;
-
+import nu.njp.receptinator.core.qualifier.DefaultLogger;
+import org.slf4j.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.Basic;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.IOException;
 
 /**
  * Login backing bean
@@ -15,13 +17,13 @@ import javax.validation.constraints.Size;
  */
 @Named("login")
 @RequestScoped
-public class LoginBacking {
+public class LoginBacking extends BackingBase {
 
     @Inject
     AuthenticationProvider authentication;
 
-    private String errorTitle;
-    private String errorDescription;
+    @Inject @DefaultLogger
+    private Logger logger;
 
     @Basic
     @NotNull
@@ -49,25 +51,13 @@ public class LoginBacking {
     }
 
     public String login() {
-        authentication.isAuthenticated();
-        errorTitle = "Login failed!";
-        errorDescription = " Please check your credentials and try again..";
-        //throw new RuntimeException("AUTHED: " + result);
+        if(authentication.authenticate(userName, password)) {
+            try { redirect("member/index.xhtml"); } catch (IOException e) { logger.error(e.getMessage()); }
+        } else {
+            setMessageTitle("Login failed!");
+            setMessageDescription("Please check your credentials and try again..");
+            setMessageType(MessageType.ERROR);
+        }
         return null;
-    }
-    public String getErrorTitle() {
-        return errorTitle;
-    }
-
-    public void setErrorTitle(String errorTitle) {
-        this.errorTitle = errorTitle;
-    }
-
-    public String getErrorDescription() {
-        return errorDescription;
-    }
-
-    public void setErrorDescription(String errorDescription) {
-        this.errorDescription = errorDescription;
     }
 }

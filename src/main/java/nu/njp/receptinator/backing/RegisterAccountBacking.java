@@ -4,7 +4,6 @@ import nu.njp.receptinator.entity.Account;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.persistence.Basic;
 import javax.validation.constraints.NotNull;
@@ -16,15 +15,12 @@ import javax.validation.constraints.Size;
  */
 @Named("registerAccount")
 @RequestScoped
-public class RegisterAccountBacking {
+public class RegisterAccountBacking extends BackingBase {
 
     @Named("newAccount")
     @Produces
     @RequestScoped
     private Account account = new Account();
-
-    private String errorTitle;
-    private String errorDescription;
 
     @Basic(optional = false)
     @NotNull
@@ -32,26 +28,13 @@ public class RegisterAccountBacking {
     private String passwordConfirm;
 
     public String save() {
-        //save account
-        //If successful
-
+        //setMessageTitle("Username taken!");
+        //setMessageDescription("Selected username already taken, plase select another.");
+        //setMessageType(MessageType.ERROR);
+        setMessageTitle("Account created!");
+        setMessageDescription("Account successfully created, please login.");
+        setMessageType(MessageType.SUCCESS);
         return null;
-    }
-
-    public String getErrorTitle() {
-        return errorTitle;
-    }
-
-    public void setErrorTitle(String errorTitle) {
-        this.errorTitle = errorTitle;
-    }
-
-    public String getErrorDescription() {
-        return errorDescription;
-    }
-
-    public void setErrorDescription(String errorDescription) {
-        this.errorDescription = errorDescription;
     }
 
     public String getPasswordConfirm() {
