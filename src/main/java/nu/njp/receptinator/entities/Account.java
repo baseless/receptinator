@@ -1,4 +1,4 @@
-package nu.njp.receptinator.entity;
+package nu.njp.receptinator.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
- * Account entity
+ * Account entities
  * @author Daniel Ryhle <daniel@ryhle.se>
  */
 @Entity

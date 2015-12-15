@@ -1,5 +1,7 @@
 package nu.njp.receptinator.backing;
 
+import nu.njp.receptinator.core.JsfMessage;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.persistence.Basic;
@@ -25,9 +27,7 @@ public class PasswordRecoveryBacking extends BackingBase {
         //setMessageTitle("Email not found!");
         //setMessageDescription("Entered email address not found in database");
         //setMessageType(MessageType.ERROR);
-        setMessageTitle("Request approved!");
-        setMessageDescription("An email with further instructions has been sent to you.");
-        setMessageType(MessageType.SUCCESS);
+        setMessage(new JsfMessage("Request approved!", "An email with further instructions has been sent to you.", JsfMessage.MessageType.SUCCESS));
         return null;
     }
 

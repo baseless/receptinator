@@ -1,6 +1,7 @@
 package nu.njp.receptinator.backing;
 
-import nu.njp.receptinator.entity.Account;
+import nu.njp.receptinator.core.JsfMessage;
+import nu.njp.receptinator.entities.Account;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
@@ -31,9 +32,7 @@ public class RegisterAccountBacking extends BackingBase {
         //setMessageTitle("Username taken!");
         //setMessageDescription("Selected username already taken, plase select another.");
         //setMessageType(MessageType.ERROR);
-        setMessageTitle("Account created!");
-        setMessageDescription("Account successfully created, please login.");
-        setMessageType(MessageType.SUCCESS);
+        setMessage(new JsfMessage("Account created!", "Account successfully created, please login.", JsfMessage.MessageType.SUCCESS));
         return null;
     }
 

@@ -1,5 +1,7 @@
 package nu.njp.receptinator.backing;
 
+import nu.njp.receptinator.core.JsfMessage;
+
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -10,34 +12,14 @@ import java.io.IOException;
  */
 public abstract class BackingBase {
 
-    public enum MessageType { ERROR, WARNING, SUCCESS, INFORMATION }
+    private JsfMessage message = null;
 
-    private String messageTitle;
-    private String messageDescription;
-    private MessageType messageType;
-
-    public String getMessageTitle() {
-        return messageTitle;
+    public JsfMessage getMessage() {
+        return message;
     }
 
-    public void setMessageTitle(String messageTitle) {
-        this.messageTitle = messageTitle;
-    }
-
-    public String getMessageDescription() {
-        return messageDescription;
-    }
-
-    public void setMessageDescription(String messageDescription) {
-        this.messageDescription = messageDescription;
-    }
-
-    public MessageType getMessageType() {
-        return messageType;
-    }
-
-    public void setMessageType(MessageType messageType) {
-        this.messageType = messageType;
+    public void setMessage(JsfMessage message) {
+        this.message = message;
     }
 
     protected FacesContext getContext() {

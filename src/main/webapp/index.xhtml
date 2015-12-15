@@ -15,9 +15,9 @@
                 <h:form>
                     <h3>Login</h3>
                     <div class="form-group">
-                        <c:if test="#{login.messageTitle ne null}">
-                            <c:if test="#{login.messageType.toString() eq 'ERROR'}">
-                                <div class="alert alert-danger"><span class="glyphicon glyphicon glyphicon-alert" style="padding-right: 6px;"></span><strong>#{login.messageTitle}</strong> #{login.messageDescription}</div>
+                        <c:if test="#{login.message ne null}">
+                            <c:if test="#{login.message.messageType.toString() eq 'ERROR'}">
+                                <div class="alert alert-danger"><span class="glyphicon glyphicon glyphicon-alert" style="padding-right: 6px;"></span><strong>#{login.message.messageTitle}</strong> #{login.message.messageDescription}</div>
                             </c:if>
                         </c:if>
                     </div>

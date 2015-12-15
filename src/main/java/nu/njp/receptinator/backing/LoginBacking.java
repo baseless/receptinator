@@ -1,6 +1,7 @@
 package nu.njp.receptinator.backing;
 
 import nu.njp.receptinator.core.AuthenticationProvider;
+import nu.njp.receptinator.core.JsfMessage;
 import nu.njp.receptinator.core.qualifier.DefaultLogger;
 import org.slf4j.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -20,7 +21,7 @@ import java.io.IOException;
 public class LoginBacking extends BackingBase {
 
     @Inject
-    AuthenticationProvider authentication;
+    AuthenticationProvider authenticationProvider;
 
     @Inject @DefaultLogger
     private Logger logger;
@@ -29,6 +30,7 @@ public class LoginBacking extends BackingBase {
     @NotNull
     @Size(min = 4, max = 50, message = "Invalid Username")
     private String userName;
+
     @Basic
     @NotNull
     @Size(min = 6, max = 200, message = "Invalid password")
@@ -51,12 +53,10 @@ public class LoginBacking extends BackingBase {
     }
 
     public String login() {
-        if(authentication.authenticate(userName, password)) {
+        if(authenticationProvider.authenticate(userName, password)) {
             try { redirect("member/index.xhtml"); } catch (IOException e) { logger.error(e.getMessage()); }
         } else {
-            setMessageTitle("Login failed!");
-            setMessageDescription("Please check your credentials and try again..");
-            setMessageType(MessageType.ERROR);
+            setMessage(new JsfMessage("Login failed!", "Please check your credentials and try again..", JsfMessage.MessageType.ERROR));
         }
         return null;
     }

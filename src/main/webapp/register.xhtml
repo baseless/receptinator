@@ -15,17 +15,17 @@
                     <h:form>
                         <h3>Register account</h3>
                         <div class="form-group">
-                            <c:if test="#{registerAccount.messageTitle ne null}">
-                                <c:if test="#{registerAccount.messageType.toString() eq 'ERROR'}">
-                                    <div class="alert alert-danger"><span class="glyphicon glyphicon glyphicon-alert" style="padding-right: 6px;"></span><strong>#{registerAccount.messageTitle}</strong> #{registerAccount.messageDescription}</div>
+                            <c:if test="#{registerAccount.message.messageTitle ne null}">
+                                <c:if test="#{registerAccount.message.messageType.toString() eq 'ERROR'}">
+                                    <div class="alert alert-danger"><span class="glyphicon glyphicon glyphicon-alert" style="padding-right: 6px;"></span><strong>#{registerAccount.message.messageTitle}</strong> #{registerAccount.message.messageDescription}</div>
                                 </c:if>
-                                <c:if test="#{registerAccount.messageType.toString() eq 'SUCCESS'}">
-                                    <div class="alert alert-success"><span class="glyphicon glyphicon glyphicon-ok" style="padding-right: 6px;"></span><strong>#{registerAccount.messageTitle}</strong> #{registerAccount.messageDescription}</div>
+                                <c:if test="#{registerAccount.message.messageType.toString() eq 'SUCCESS'}">
+                                    <div class="alert alert-success"><span class="glyphicon glyphicon glyphicon-ok" style="padding-right: 6px;"></span><strong>#{registerAccount.message.messageTitle}</strong> #{registerAccount.message.messageDescription}</div>
                                     <h:button styleClass="btn btn-default" value="To login" outcome="index"></h:button>
                                 </c:if>
                             </c:if>
                         </div>
-                        <c:if test="#{registerAccount.messageType.toString() ne 'SUCCESS'}">
+                        <c:if test="#{registerAccount.message.messageType.toString() ne 'SUCCESS'}">
                             <div class="form-group">
                                 <h:outputLabel value="Username"></h:outputLabel>
                                 <h:inputText id="userName" styleClass="form-control" value="#{newAccount.userName}"></h:inputText>
