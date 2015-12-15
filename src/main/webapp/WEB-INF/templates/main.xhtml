@@ -18,11 +18,16 @@
                         <img src="./img/logo.png" alt="" style="margin-top: 12px;"/>
                     </div>
                     <div class="col-xs-8">
+                        <h:form>
                         <ul class="nav navbar-nav navbar-right">
                             <ui:repeat value="#{menu.menu}" var="item">
                                 <li class="#{item.classParameter}"><h:link outcome="#{item.path}" value="#{item.name}"></h:link></li>
                             </ui:repeat>
+                            <c:if test="#{authenticationProvider.authenticated eq true}">
+                                <li><h:commandLink action="#{authenticationProvider.logout}" value="Logout"></h:commandLink></li>
+                            </c:if>
                         </ul>
+                        </h:form>
                     </div>
                 </div>
             </div>

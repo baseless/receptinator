@@ -28,7 +28,7 @@ public class Account implements Serializable {
     @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "accountId")
-    private String accountId;
+    private int accountId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 4, max = 50)
@@ -61,11 +61,11 @@ public class Account implements Serializable {
     @NotNull
     private Permission permission;
 
-    public String getAccountId() {
+    public int getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(String accountId) {
+    public void setAccountId(int accountId) {
         this.accountId = accountId;
     }
 

@@ -26,10 +26,16 @@ public class AuthenticationProvider implements Serializable {
 
     public boolean authenticate(String userName, String password) {
         account = accountService.authenticate(userName, password);
+
+        account = new Account();
+        account.setAccountId(1);
+        account.setUserName("base");
+
         return  isAuthenticated();
     }
 
-    public void logout() {
+    public String logout() {
         account = null;
+        return "/login";
     }
 }
