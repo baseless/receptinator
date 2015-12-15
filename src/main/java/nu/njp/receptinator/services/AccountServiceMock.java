@@ -1,6 +1,6 @@
 package nu.njp.receptinator.services;
 
-import nu.njp.receptinator.core.JsfMessage;
+import nu.njp.receptinator.core.pojo.JsfMessage;
 import nu.njp.receptinator.core.qualifier.Mocked;
 import nu.njp.receptinator.entities.Account;
 import nu.njp.receptinator.interfaces.AccountService;

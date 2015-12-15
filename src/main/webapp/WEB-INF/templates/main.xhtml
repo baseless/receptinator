@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <h:head>
         <title><ui:insert name="head">#{bundle['site.default.title']}</ui:insert></title>
         <link href="#{request.contextPath}/css/bootstrap.css" rel="stylesheet" type="text/css"/>
@@ -9,6 +11,22 @@
     </h:head>
 
     <h:body>
+        <div class="navbar navbar-default navbar-static-top">
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="col-xs-4">
+                        <img src="./img/logo.png" alt="" style="margin-top: 12px;"/>
+                    </div>
+                    <div class="col-xs-8">
+                        <ul class="nav navbar-nav navbar-right">
+                            <ui:repeat value="#{menu.menu}" var="item">
+                                <li class="#{item.classParameter}"><h:link outcome="#{item.path}" value="#{item.name}"></h:link></li>
+                            </ui:repeat>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container-fluid">
             <ui:insert name="content"></ui:insert>
             <div class="row-fluid" id="footer"><ui:insert name="footer">#{bundle['site.default.footer']}</ui:insert></div>

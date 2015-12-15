@@ -1,4 +1,4 @@
-package nu.njp.receptinator.core;
+package nu.njp.receptinator.core.pojo;
 
 /**
  * Pojo class for managing JSF form messages

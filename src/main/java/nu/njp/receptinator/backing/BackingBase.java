@@ -1,6 +1,6 @@
 package nu.njp.receptinator.backing;
 
-import nu.njp.receptinator.core.JsfMessage;
+import nu.njp.receptinator.core.pojo.JsfMessage;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;

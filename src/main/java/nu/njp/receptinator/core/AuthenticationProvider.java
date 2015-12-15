@@ -13,7 +13,7 @@ import java.io.Serializable;
  * Authentication provider
  * @author Daniel Ryhle <daniel@ryhle.se>
  */
-@Named
+@Named("authenticationProvider")
 @SessionScoped
 public class AuthenticationProvider implements Serializable {
 

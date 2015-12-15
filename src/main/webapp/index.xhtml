@@ -4,39 +4,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
-
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="/WEB-INF/templates/main.xhtml">
     <ui:define name="content">
         <div class="row-fluid">
-            <div class="col-xs-4"></div>
-            <div class="col-xs-4">
-                <h:form>
-                    <h3>Login</h3>
-                    <div class="form-group">
-                        <c:if test="#{login.message ne null}">
-                            <c:if test="#{login.message.messageType.toString() eq 'ERROR'}">
-                                <div class="alert alert-danger"><span class="glyphicon glyphicon glyphicon-alert" style="padding-right: 6px;"></span><strong>#{login.message.messageTitle}</strong> #{login.message.messageDescription}</div>
-                            </c:if>
-                        </c:if>
-                    </div>
-                    <div class="form-group">
-                        <h:outputLabel value="Username"></h:outputLabel>
-                        <h:inputText id="userName" styleClass="form-control" value="#{login.userName}"></h:inputText>
-                        <h:message styleClass="label label-danger" for="userName" />
-                    </div>
-                    <div class="form-group">
-                        <h:outputLabel value="Password"></h:outputLabel>
-                        <h:inputSecret id="password" styleClass="form-control" value="#{login.password}"></h:inputSecret>
-                        <h:message styleClass="label label-danger" for="password" />
-                    </div>
-                    <h:commandButton style="margin-right: 5px;" styleClass="btn btn-primary" value="Login" action="#{login.login}"><f:ajax execute="@form" render="@form" /></h:commandButton>
-                    <h:button style="margin-right: 5px;" styleClass="btn btn-default" value="Register" outcome="register"></h:button>
-                    <h:button styleClass="btn btn-default" value="Forgot password" outcome="recoverpassword"></h:button>
-                </h:form>
+            <div class="col-xs-12">
+                <h1 style="text-align: center;">Welcome to the best recipe site on the internet!</h1>
             </div>
-            <div class="col-xs-4"></div>
+        </div>
+        <div class="row-fluid">
+            <div class="col-xs-4">
+                <h3>Best recipes</h3>
+                <p>Bacon ipsum dolor amet ribeye ham frankfurter, cupim sausage ground round salami shank ham hock landjaeger short ribs corned beef pork chop pork. T-bone bacon ground round tongue biltong meatloaf corned beef kevin. Salami bacon t-bone cow pig. Pastrami ball tip prosciutto brisket pancetta.</p>
+                <p>Kielbasa flank meatball turkey pork chop kevin brisket ham tri-tip leberkas strip steak hamburger shankle jowl. Brisket pork jowl, hamburger fatback landjaeger picanha frankfurter ham hock pork belly short loin porchetta alcatra jerky drumstick. Pork chop landjaeger ham hock, shank flank tail corned beef ham shoulder chuck pastrami. Ribeye shank turducken leberkas turkey swine short loin boudin bacon capicola.</p>
+            </div>
+            <div class="col-xs-4">
+                <h3>Best users</h3>
+                <p>Pancetta bacon landjaeger ground round ham flank meatball boudin capicola short loin meatloaf jowl corned beef ball tip venison. Pork ham hock capicola ground round. Ribeye bacon strip steak shank shoulder sirloin cow drumstick filet mignon swine boudin cupim leberkas pastrami sausage. Shank rump bresaola shankle short ribs filet mignon turkey swine. Ham ball tip porchetta sausage capicola prosciutto.</p>
+            </div>
+            <div class="col-xs-4">
+                <h3>Best developers</h3>
+                <p>Pork belly shankle kevin jerky beef ribs, cow ground round prosciutto doner meatloaf shank landjaeger ribeye shoulder corned beef. Ball tip hamburger capicola pancetta. Doner meatloaf short ribs pancetta flank chuck. Salami pork belly drumstick, leberkas cow frankfurter pastrami ball tip ground round. Meatball flank bresaola shankle pig.</p>
+                <p>Picanha fatback tri-tip short ribs pork loin pork chop porchetta. Landjaeger pig tenderloin alcatra cow, pastrami turducken pork kevin. Prosciutto bresaola ham hock tongue, porchetta meatloaf capicola jerky strip steak t-bone sirloin brisket ham. Ground round short loin meatball, spare ribs ham andouille hamburger pork loin. Fatback ground round salami, venison shank meatball tail bresaola spare ribs kielbasa. Tongue tenderloin shank, rump swine cow jowl bacon pork pastrami beef ham hock.</p>
+            </div>
         </div>
     </ui:define>
 </ui:composition>

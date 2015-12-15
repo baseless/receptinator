@@ -1,6 +1,6 @@
 package nu.njp.receptinator.interfaces;
 
-import nu.njp.receptinator.core.JsfMessage;
+import nu.njp.receptinator.core.pojo.JsfMessage;
 import nu.njp.receptinator.entities.Account;
 
 import java.io.Serializable;

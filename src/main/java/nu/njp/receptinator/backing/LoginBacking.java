@@ -1,7 +1,7 @@
 package nu.njp.receptinator.backing;
 
 import nu.njp.receptinator.core.AuthenticationProvider;
-import nu.njp.receptinator.core.JsfMessage;
+import nu.njp.receptinator.core.pojo.JsfMessage;
 import nu.njp.receptinator.core.qualifier.DefaultLogger;
 import org.slf4j.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -54,7 +54,7 @@ public class LoginBacking extends BackingBase {
 
     public String login() {
         if(authenticationProvider.authenticate(userName, password)) {
-            try { redirect("member/index.xhtml"); } catch (IOException e) { logger.error(e.getMessage()); }
+            try { redirect("member/login.xhtml"); } catch (IOException e) { logger.error(e.getMessage()); }
         } else {
             setMessage(new JsfMessage("Login failed!", "Please check your credentials and try again..", JsfMessage.MessageType.ERROR));
         }
