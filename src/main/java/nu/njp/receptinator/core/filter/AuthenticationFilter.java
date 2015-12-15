@@ -8,15 +8,17 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
 
 /**
  * Servlet authentication filter
  * @author Daniel Ryhle <daniel@ryhle.se>
  */
-@WebFilter("/*")
+@WebFilter("/faces/*")
 public class AuthenticationFilter implements Filter {
 
+    //todo: LINKS MUST BE FIXED
     @Inject
     AuthenticationProvider auth;
 
@@ -32,10 +34,25 @@ public class AuthenticationFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        String uri = request.getRequestURI().toLowerCase();
 
-        logger.info("request detected from auth filter");
+        boolean allowed = false;
 
-        filterChain.doFilter(servletRequest,servletResponse);
+        logger.info("Request for url '" + uri + "' from address " + request.getRemoteAddr());
+
+        if(uri.startsWith("/receptinator/faces/member") || uri.startsWith("/receptinator/faces/admin")) {
+            if(auth.isAuthenticated()) {
+                allowed = true;
+            }
+        } else {
+            allowed = true;
+        }
+
+        if(allowed) {
+            filterChain.doFilter(servletRequest, servletResponse);
+        } else {
+            ((HttpServletResponse) servletResponse).sendRedirect("/receptinator/faces/notallowed.xhtml");
+        }
     }
 
     @Override
