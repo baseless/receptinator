@@ -5,7 +5,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
- * Created by Asiohu on 2015-12-18.
+ * Created by Andreas och Mattias on 2015-12-18.
  */
 @Entity
 @Table(name = "recipes")
