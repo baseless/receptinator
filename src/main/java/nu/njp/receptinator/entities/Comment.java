@@ -5,7 +5,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
- * Created by Asiohu on 2015-12-18.
+ * Created by Andreas and Mattias on 2015-12-18.
  */
 @Entity
 @Table(name = "comments")
@@ -17,6 +17,14 @@ public class Comment implements Serializable{
     private int commentId;
     @Size(max=500)
     private String commentText;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "accountId")
+    private Account account;
+
+    @ManyToOne (optional = false)
+    @JoinColumn(name = "recipeId")
+    private Recipe recipe;
 
     public Comment(String commentText) {
         this.setCommentText(commentText);
@@ -36,5 +44,21 @@ public class Comment implements Serializable{
 
     public void setCommentText(String commentText) {
         this.commentText = commentText;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 }

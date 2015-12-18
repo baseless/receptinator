@@ -20,6 +20,14 @@ public class Recipe implements Serializable {
     @Size(max=2000)
     private String recipeText;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name="categoryId")
+    private Category category;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name="accountId")
+    private Account account;
+
     public Recipe(String recipeName, String recipeText){
         this.setRecipeName(recipeName);
         this.setRecipeText(recipeText);
@@ -47,5 +55,21 @@ public class Recipe implements Serializable {
 
     public void setRecipeText(String recipeText) {
         this.recipeText = recipeText;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

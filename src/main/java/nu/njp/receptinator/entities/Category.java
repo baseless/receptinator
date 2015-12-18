@@ -2,6 +2,7 @@ package nu.njp.receptinator.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Andreas och Mattias on 2015-12-18.

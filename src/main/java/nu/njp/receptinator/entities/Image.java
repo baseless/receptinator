@@ -17,6 +17,10 @@ public class Image implements Serializable{
     private int imageId;
     private String imageURL;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "recipeId")
+    private Recipe recipe;
+
     public Image(String imageURL) {
         this.setImageURL(imageURL);
     }
@@ -35,5 +39,13 @@ public class Image implements Serializable{
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 }
