@@ -23,7 +23,6 @@ import javax.validation.constraints.Size;
 public class RegisterAccountBacking extends BackingBase {
 
     @EJB
-    //@Inject @Mocked
     AccountServiceLocal accountServiceLocal;
 
     @Named("newAccount")
