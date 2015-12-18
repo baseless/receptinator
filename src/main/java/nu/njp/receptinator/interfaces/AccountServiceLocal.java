@@ -6,10 +6,10 @@ import nu.njp.receptinator.entities.Account;
 import java.io.Serializable;
 
 /**
- * AccountService interface
+ * AccountServiceLocal interface
  * @author Daniel Ryhle <daniel@ryhle.se>
  */
-public interface AccountService extends Serializable {
+public interface AccountServiceLocal extends Serializable {
     /**
      * Authenticates a login request and returns the Account instance if successful.
      * @param userName      the username to authenticate

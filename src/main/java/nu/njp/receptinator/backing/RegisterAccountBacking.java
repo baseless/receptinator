@@ -3,7 +3,7 @@ package nu.njp.receptinator.backing;
 import nu.njp.receptinator.core.pojo.JsfMessage;
 import nu.njp.receptinator.core.qualifier.Mocked;
 import nu.njp.receptinator.entities.Account;
-import nu.njp.receptinator.interfaces.AccountService;
+import nu.njp.receptinator.interfaces.AccountServiceLocal;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 public class RegisterAccountBacking extends BackingBase {
 
     @Inject @Mocked
-    AccountService accountService;
+    AccountServiceLocal accountServiceLocal;
 
     @Named("newAccount")
     @Produces
@@ -35,7 +35,7 @@ public class RegisterAccountBacking extends BackingBase {
     private String passwordConfirm;
 
     public String save() {
-        JsfMessage result = accountService.addAccount(account);
+        JsfMessage result = accountServiceLocal.addAccount(account);
         setMessage(result);
         return null;
     }

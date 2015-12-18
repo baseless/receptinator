@@ -2,7 +2,7 @@ package nu.njp.receptinator.core;
 
 import nu.njp.receptinator.core.qualifier.Mocked;
 import nu.njp.receptinator.entities.Account;
-import nu.njp.receptinator.interfaces.AccountService;
+import nu.njp.receptinator.interfaces.AccountServiceLocal;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -18,14 +18,14 @@ import java.io.Serializable;
 public class AuthenticationProvider implements Serializable {
 
     @Inject @Mocked
-    AccountService accountService;
+    AccountServiceLocal accountServiceLocal;
 
     private Account account = null;
 
     public boolean isAuthenticated() { return account != null; }
 
     public boolean authenticate(String userName, String password) {
-        account = accountService.authenticate(userName, password);
+        account = accountServiceLocal.authenticate(userName, password);
 
         account = new Account();
         account.setAccountId(1);

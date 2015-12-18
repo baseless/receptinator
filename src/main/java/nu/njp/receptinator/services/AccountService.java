@@ -3,17 +3,17 @@ package nu.njp.receptinator.services;
 import nu.njp.receptinator.core.pojo.JsfMessage;
 import nu.njp.receptinator.core.qualifier.Mocked;
 import nu.njp.receptinator.entities.Account;
-import nu.njp.receptinator.interfaces.AccountService;
+import nu.njp.receptinator.interfaces.AccountServiceLocal;
 
 import javax.ejb.Stateless;
 
 /**
- * AccountService mock
+ * AccountServiceLocal mock
  * @author Daniel Ryhle <daniel@ryhle.se>
  */
 @Stateless
 @Mocked
-public class AccountServiceMock implements AccountService {
+public class AccountService implements AccountServiceLocal {
 
     @Override
     public Account authenticate(String userName, String password) {
