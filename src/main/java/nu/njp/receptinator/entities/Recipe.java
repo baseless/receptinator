@@ -12,7 +12,6 @@ import java.io.Serializable;
 public class Recipe implements Serializable {
 
     @Id
-    @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recipeId")
     private int recipeId;
@@ -27,6 +26,9 @@ public class Recipe implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name="accountId")
     private Account account;
+
+    public Recipe() {
+    }
 
     public Recipe(String recipeName, String recipeText){
         this.setRecipeName(recipeName);

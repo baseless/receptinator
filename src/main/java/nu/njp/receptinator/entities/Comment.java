@@ -11,7 +11,6 @@ import java.io.Serializable;
 @Table(name = "comments")
 public class Comment implements Serializable{
     @Id
-    @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commentId")
     private int commentId;
@@ -25,6 +24,9 @@ public class Comment implements Serializable{
     @ManyToOne (optional = false)
     @JoinColumn(name = "recipeId")
     private Recipe recipe;
+
+    public Comment() {
+    }
 
     public Comment(String commentText) {
         this.setCommentText(commentText);

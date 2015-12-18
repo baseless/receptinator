@@ -5,6 +5,7 @@ import nu.njp.receptinator.core.qualifier.Mocked;
 import nu.njp.receptinator.entities.Account;
 import nu.njp.receptinator.interfaces.AccountServiceLocal;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -21,7 +22,8 @@ import javax.validation.constraints.Size;
 @RequestScoped
 public class RegisterAccountBacking extends BackingBase {
 
-    @Inject @Mocked
+    @EJB
+    //@Inject @Mocked
     AccountServiceLocal accountServiceLocal;
 
     @Named("newAccount")

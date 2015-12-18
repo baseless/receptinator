@@ -12,11 +12,13 @@ import java.util.List;
 public class Category implements Serializable {
 
     @Id
-    @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "categoryId")
     private int categoryId;
     private String categoryName;
+
+    public Category() {
+    }
 
     public Category(String categoryName) {
        this.setCategoryName(categoryName);

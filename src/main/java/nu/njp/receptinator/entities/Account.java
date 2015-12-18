@@ -13,6 +13,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "accounts")
 @NamedQueries({
+        @NamedQuery(name="findIdByUserName", query="SELECT c FROM Account c WHERE c.userName LIKE :userName")
 })
 public class Account implements Serializable {
 
@@ -26,7 +27,6 @@ public class Account implements Serializable {
     public enum Permission { USER, CONTRIBUTER, ADMINISTRATOR }
 
     @Id
-    @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "accountId")
     private int accountId;

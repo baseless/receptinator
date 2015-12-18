@@ -27,20 +27,15 @@ public class AccountService implements AccountServiceLocal {
     public Account authenticate(String userName, String password) {
 
         Account selectedAcc;
-
         try {
-            //hämta användare
-            Query q = em.createNativeQuery("SELECT accountId FROM accounts WHERE userName = '" + userName + "';");
-            int selectedId = (int) q.getSingleResult();
-            selectedAcc = em.find(Account.class, selectedId);
+            selectedAcc = (Account) em.createNamedQuery("findIdByUserName").setParameter("userName", userName).getSingleResult();
+
         } catch(NoResultException e){
             return null;
         }
 
-        //hasha lösenordet med användarens salt
         String hashedPwd = PasswordHasher.Hash256(password, selectedAcc.getSalt());
 
-        //jämför lösenorden
         if(hashedPwd.equals(selectedAcc.getPassword())){
             return selectedAcc;
         } else {
