@@ -12,7 +12,8 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "accounts")
-@NamedQueries({ })
+@NamedQueries({
+})
 public class Account implements Serializable {
 
     public Account() {
