@@ -24,4 +24,7 @@ public interface AccountServiceLocal extends Serializable {
      * @return          JsfMessage instance containing status of the operation
      */
     JsfMessage addAccount(Account account);
+
+
+    Account passwordLost(String email);
 }

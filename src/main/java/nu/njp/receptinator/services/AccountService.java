@@ -3,6 +3,7 @@ package nu.njp.receptinator.services;
 import nu.njp.receptinator.core.pojo.JsfMessage;
 import nu.njp.receptinator.core.qualifier.Mocked;
 import nu.njp.receptinator.core.util.PasswordHasher;
+import nu.njp.receptinator.core.util.PostMail;
 import nu.njp.receptinator.entities.Account;
 import nu.njp.receptinator.interfaces.AccountServiceLocal;
 
@@ -25,7 +26,6 @@ public class AccountService implements AccountServiceLocal {
 
     @Override
     public Account authenticate(String userName, String password) {
-
         Account selectedAcc;
 
         try {
@@ -33,7 +33,7 @@ public class AccountService implements AccountServiceLocal {
             Query q = em.createNativeQuery("SELECT accountId FROM accounts WHERE userName = '" + userName + "';");
             int selectedId = (int) q.getSingleResult();
             selectedAcc = em.find(Account.class, selectedId);
-        } catch(NoResultException e){
+        } catch (NoResultException e) {
             return null;
         }
 
@@ -41,7 +41,7 @@ public class AccountService implements AccountServiceLocal {
         String hashedPwd = PasswordHasher.Hash256(password, selectedAcc.getSalt());
 
         //jämför lösenorden
-        if(hashedPwd.equals(selectedAcc.getPassword())){
+        if (hashedPwd.equals(selectedAcc.getPassword())) {
             return selectedAcc;
         } else {
             return null;
@@ -51,13 +51,40 @@ public class AccountService implements AccountServiceLocal {
 
     @Override
     public JsfMessage addAccount(Account account) {
-        try{
+        try {
             account.setPassword(PasswordHasher.Hash256(account.getPassword(), account.getSalt()));
             em.persist(account);
-        } catch (Exception e){
+        } catch (Exception e) {
             return new JsfMessage("Error creating account!", "Error in creating account, please try again.", JsfMessage.MessageType.ERROR);
         }
         return new JsfMessage("Account created!", "Account successfully created, please login.", JsfMessage.MessageType.SUCCESS);
     }
 
+
+    @Override
+    public Account passwordLost(String email) {
+        Account selectedAcc;
+        PostMail postMail = null;
+        int selectedId;
+        try {
+            //hämta användare
+            Query q = em.createNativeQuery("SELECT accountId FROM accounts WHERE email = '" + email + "';");
+            selectedId = (int) q.getSingleResult();
+            selectedAcc = em.find(Account.class, selectedId);
+        } catch (NoResultException e) {
+            return null;
+        }
+        //jämför email and insert a new password into that account.
+        if (email.equals(selectedAcc.getEmail())) {
+            postMail.getAccountCredentials(selectedAcc);
+            em.createNativeQuery("INSERT INTO accounts (password) VALUES (" + PasswordHasher.Hash256(postMail.getNewPassword(), selectedAcc.getSalt()) + ")")
+                    .setParameter(1, selectedId)
+                    .executeUpdate();
+        } else {
+            return null;
+        }
+        return selectedAcc;
+    }
 }
+
+
