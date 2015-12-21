@@ -13,7 +13,9 @@ import java.io.Serializable;
 @Entity
 @Table(name = "accounts")
 @NamedQueries({
-        @NamedQuery(name="findIdByUserName", query="SELECT c FROM Account c WHERE c.userName LIKE :userName")
+        @NamedQuery(name="findIdByUserName", query="SELECT c FROM Account c WHERE c.userName LIKE :userName"),
+        @NamedQuery(name="findIdByEmail", query="SELECT c FROM Account c WHERE c.email LIKE :email"),
+        @NamedQuery(name="setPasswordById", query="UPDATE Account a SET a.password = :newPassword WHERE a.accountId = :accountId"),
 })
 public class Account implements Serializable {
 

@@ -18,7 +18,6 @@ import javax.persistence.Query;
  * @author Daniel Ryhle, Mattias Hjalmarsson, Andreas Svensson
  */
 @Stateless
-@Mocked
 public class AccountService implements AccountServiceLocal {
 
     @PersistenceContext(unitName = "NewPersistenceUnit")
@@ -30,9 +29,7 @@ public class AccountService implements AccountServiceLocal {
 
         try {
             //hämta användare
-            Query q = em.createNativeQuery("SELECT accountId FROM accounts WHERE userName = '" + userName + "';");
-            int selectedId = (int) q.getSingleResult();
-            selectedAcc = em.find(Account.class, selectedId);
+            selectedAcc = (Account) em.createNamedQuery("findIdByUserName").setParameter("userName", userName).getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
@@ -64,25 +61,24 @@ public class AccountService implements AccountServiceLocal {
     @Override
     public Account passwordLost(String email) {
         Account selectedAcc;
-        PostMail postMail = null;
+        PostMail postMail = new PostMail();
         int selectedId;
         try {
+            selectedAcc = (Account) em.createNamedQuery("findIdByEmail").setParameter("email", email).getSingleResult();
+            /*
             //hämta användare
             Query q = em.createNativeQuery("SELECT accountId FROM accounts WHERE email = '" + email + "';");
             selectedId = (int) q.getSingleResult();
             selectedAcc = em.find(Account.class, selectedId);
+            */
         } catch (NoResultException e) {
             return null;
         }
         //jämför email and insert a new password into that account.
-        if (email.equals(selectedAcc.getEmail())) {
-            postMail.getAccountCredentials(selectedAcc);
-            em.createNativeQuery("INSERT INTO accounts (password) VALUES (" + PasswordHasher.Hash256(postMail.getNewPassword(), selectedAcc.getSalt()) + ")")
-                    .setParameter(1, selectedId)
-                    .executeUpdate();
-        } else {
-            return null;
-        }
+        postMail.getAccountCredentials(selectedAcc);
+        String newPassword = PasswordHasher.Hash256(postMail.getNewPassword(), selectedAcc.getSalt());
+        em.createNamedQuery("setPasswordById").setParameter("newPassword", newPassword).setParameter("accountId", selectedAcc.getAccountId()).executeUpdate();
+
         return selectedAcc;
     }
 }

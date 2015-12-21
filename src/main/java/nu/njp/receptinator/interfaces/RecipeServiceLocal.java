@@ -10,7 +10,6 @@ import java.util.Collection;
  * Created by Mattias and Andreas on 2015-12-18.
  */
 
-@Local
 public interface RecipeServiceLocal /*extends Serializable */{
 
     Collection<Recipe> all();

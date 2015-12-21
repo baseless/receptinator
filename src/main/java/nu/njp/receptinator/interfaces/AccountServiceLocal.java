@@ -3,12 +3,14 @@ package nu.njp.receptinator.interfaces;
 import nu.njp.receptinator.core.pojo.JsfMessage;
 import nu.njp.receptinator.entities.Account;
 
+import javax.ejb.Local;
 import java.io.Serializable;
 
 /**
  * AccountServiceLocal interface
  * @author Daniel Ryhle <daniel@ryhle.se>
  */
+
 public interface AccountServiceLocal extends Serializable {
     /**
      * Authenticates a login request and returns the Account instance if successful.

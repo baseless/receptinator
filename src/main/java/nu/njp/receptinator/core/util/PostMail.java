@@ -25,11 +25,13 @@ public class PostMail {
     public void getAccountCredentials(Account account) {
         Properties properties = System.getProperties();
         properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.socketFactory.port", "465");
+        properties.put("mail.smtp.socketFactory.port", "587");
         properties.put("mail.smtp.socketFactory.class",
                 "javax.net.ssl.SSLSocketFactory");
         properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.port", "465");
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.debug", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
 
 
 
@@ -59,7 +61,7 @@ public class PostMail {
 
     private String textToClient(Account account) {
         setNewPassword();
-        return "Hey" + account.getUserName() + CRLF +
+        return "Hey " + account.getUserName() + CRLF +
             "Dear " + account.getFirstName() + " " + account.getLastName() + CRLF +
             "Arnold Schwarzenegger has granted you a new password! " + CRLF +
             "Your new password is: " + newPassword;
