@@ -62,20 +62,13 @@ public class AccountService implements AccountServiceLocal {
     public Account passwordLost(String email) {
         Account selectedAcc;
         PostMail postMail = new PostMail();
-        int selectedId;
         try {
             selectedAcc = (Account) em.createNamedQuery("findIdByEmail").setParameter("email", email).getSingleResult();
-            /*
-            //hämta användare
-            Query q = em.createNativeQuery("SELECT accountId FROM accounts WHERE email = '" + email + "';");
-            selectedId = (int) q.getSingleResult();
-            selectedAcc = em.find(Account.class, selectedId);
-            */
         } catch (NoResultException e) {
             return null;
         }
-        //jämför email and insert a new password into that account.
-        postMail.getAccountCredentials(selectedAcc);
+        postMail.setRecipient(selectedAcc);
+        postMail.sendMessage();
         String newPassword = PasswordHasher.Hash256(postMail.getNewPassword(), selectedAcc.getSalt());
         em.createNamedQuery("setPasswordById").setParameter("newPassword", newPassword).setParameter("accountId", selectedAcc.getAccountId()).executeUpdate();
 

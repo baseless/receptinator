@@ -36,9 +36,10 @@ public class PasswordRecoveryBacking extends BackingBase {
 
     public String recover() {
         if(emailProvider.emailSender(emailAddress)) {
-            try { redirect("WEB-INF/login.xhtml"); } catch (IOException e) { logger.error(e.getMessage()); }
+            try {
+                redirect("faces/login.xhtml"); } catch (IOException e) { logger.error(e.getMessage()); }
         } else {
-            setMessage(new JsfMessage("Error!", "Please check your credentials and try again..", JsfMessage.MessageType.ERROR));
+            setMessage(new JsfMessage("Error!", "Email does not exist..", JsfMessage.MessageType.ERROR));
         }
         /*
         setMessageTitle("Email not found!");

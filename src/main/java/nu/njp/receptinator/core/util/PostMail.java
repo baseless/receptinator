@@ -5,6 +5,7 @@ import nu.njp.receptinator.entities.Account;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.ws.rs.POST;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Properties;
@@ -19,11 +20,14 @@ public class PostMail {
     private String CRLF = "\r\n";
     private SecureRandom random = new SecureRandom();
     private String newPassword;
+    private Account recipient;
+    private Properties properties;
+    private Session session;
+    private MimeMessage message;
+    private String textMessage;
 
-
-
-    public void getAccountCredentials(Account account) {
-        Properties properties = System.getProperties();
+    public PostMail(){
+        properties = System.getProperties();
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.socketFactory.port", "587");
         properties.put("mail.smtp.socketFactory.class",
@@ -33,36 +37,43 @@ public class PostMail {
         properties.put("mail.debug", "true");
         properties.put("mail.smtp.starttls.enable", "true");
 
-
-
-        Session session = Session.getDefaultInstance(properties,
+        session = Session.getDefaultInstance(properties,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(RECEPTINATORUSERNAME,RECEPTINATORPASSWORD);
                     }
                 });
+
+
+    }
+
+    public void setRecipient(Account account) {
+        recipient = account;
         try {
-            MimeMessage message = new MimeMessage(session);
+            message = new MimeMessage(session);
             message.setFrom(new InternetAddress(RECEPTINATORUSERNAME));
             message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(account.getEmail()));
-            sendMessage(message, textToClient(account));
-
+            textMessage = textToClient();
         } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
 
-    private void sendMessage(Message message, String text) throws MessagingException {
+    public void sendMessage() {
         String subject = "Receptinator forgotten password here to assist";
-        message.setSubject(subject);
-        message.setText(text);
-        Transport.send(message);
+        try {
+            message.setSubject(subject);
+            message.setText(textMessage);
+            Transport.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 
-    private String textToClient(Account account) {
+    private String textToClient() {
         setNewPassword();
-        return "Hey " + account.getUserName() + CRLF +
-            "Dear " + account.getFirstName() + " " + account.getLastName() + CRLF +
+        return "Hey " + recipient.getUserName() + CRLF +
+            "Dear " + recipient.getFirstName() + " " + recipient.getLastName() + CRLF +
             "Arnold Schwarzenegger has granted you a new password! " + CRLF +
             "Your new password is: " + newPassword;
     }
@@ -71,7 +82,7 @@ public class PostMail {
         return new BigInteger(130, random).toString(32);
     }
 
-    public void setNewPassword() {
+    private void setNewPassword() {
         this.newPassword = newPasswordGenerator();
     }
 
