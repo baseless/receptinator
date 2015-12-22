@@ -32,8 +32,8 @@
                         <h:message styleClass="label label-danger" for="password" />
                     </div>
                     <h:commandButton style="margin-right: 5px;" styleClass="btn btn-primary" value="Login" action="#{login.login}"><f:ajax execute="@form" render="@form" /></h:commandButton>
-                    <h:button style="margin-right: 5px;" styleClass="btn btn-default" value="Register" outcome="register"></h:button>
-                    <h:button styleClass="btn btn-default" value="Forgot password" outcome="recoverpassword"></h:button>
+                    <h:button style="margin-right: 5px;" styleClass="btn btn-default" value="Register" outcome="/register"></h:button>
+                    <h:button styleClass="btn btn-default" value="Forgot password" outcome="/recoverpassword"></h:button>
                 </h:form>
             </div>
             <div class="col-xs-4"></div>

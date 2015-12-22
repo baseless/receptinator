@@ -57,7 +57,7 @@
                                 <h:message styleClass="label label-danger" for="email" />
                             </div>
                             <h:commandButton style="margin-right: 5px;" styleClass="btn btn-success" value="Create account" action="#{registerAccount.save}"><f:ajax execute="@form" render="@form" /></h:commandButton>
-                            <h:button styleClass="btn btn-default" immediate="true" value="Cancel" outcome="login"></h:button>
+                            <h:button styleClass="btn btn-default" immediate="true" value="Cancel" outcome="/login"></h:button>
                         </c:if>
                     </h:form>
                 </div>

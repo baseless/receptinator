@@ -34,10 +34,18 @@ public class MenuBacking {
         Collection<JsfMenuItem> items = new ArrayList<>();
         String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
         if(authenticationProvider.isAuthenticated()) {
+            JsfMenuItem memberHome = new JsfMenuItem("Portal", "/member/index");
+            JsfMenuItem recipes = new JsfMenuItem("Recipes", "/member/recipes/list");
+            switch(viewId) {
+                case "/member/index.xhtml": memberHome.setActive(true); break;
+                case "/member/recipes/list.xhtml": recipes.setActive(true); break;
+            }
+            items.add(memberHome);
+            items.add(recipes);
         } else {
-            JsfMenuItem home = new JsfMenuItem("Home", "index");
-            JsfMenuItem login = new JsfMenuItem("Login", "login");
-            JsfMenuItem register = new JsfMenuItem("Create account", "register");
+            JsfMenuItem home = new JsfMenuItem("Home", "/index");
+            JsfMenuItem login = new JsfMenuItem("Login", "/login");
+            JsfMenuItem register = new JsfMenuItem("Create account", "/register");
             switch(viewId) {
                 case "/index.xhtml": home.setActive(true); break;
                 case "/login.xhtml": login.setActive(true); break;
