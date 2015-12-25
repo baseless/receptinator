@@ -40,8 +40,6 @@ public class PostMail {
                         return new PasswordAuthentication(RECEPTINATORUSERNAME,RECEPTINATORPASSWORD);
                     }
                 });
-
-
     }
 
     public void setRecipient(Account account) {
@@ -65,7 +63,7 @@ public class PostMail {
     }
 
     public void sendMessage() {
-        String subject = "Receptinator forgotten password here to assist";
+        String subject = "Receptinator forgotten password here to assist you, " + recipient.getFirstName();
         try {
             message.setSubject(subject);
             message.setText(textMessage);
