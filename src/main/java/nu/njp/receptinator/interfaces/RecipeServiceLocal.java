@@ -12,7 +12,7 @@ import java.util.Collection;
 
 public interface RecipeServiceLocal /*extends Serializable */{
 
-    Collection<Recipe> allRecipe();
+    Collection<Recipe> allRecipe(int recipeId);
     Recipe getRecipe(int recipeId);
     JsfMessage addRecipe(Recipe recipe);
     JsfMessage removeRecipe(int id);

@@ -21,6 +21,6 @@ public interface CategoryServiceLocal extends Serializable {
 
     JsfMessage updateCategory(String oldCategoryName, String newCategoryName);
 
-    Collection<Category> allCategories();
+    Collection<Category> allCategories(int categoryId);
 
 }

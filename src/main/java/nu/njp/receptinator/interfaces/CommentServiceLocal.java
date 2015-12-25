@@ -16,5 +16,5 @@ public interface CommentServiceLocal extends Serializable {
 
     JsfMessage updateComment(String currentCommentText, String newCommentText);
 
-    Collection<Comment> allComment();
+    Collection<Comment> allComment(int commentId);
 }
