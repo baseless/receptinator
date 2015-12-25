@@ -9,9 +9,10 @@ import java.io.Serializable;
 @Entity
 @Table(name = "images")
 @NamedQueries({
-        @NamedQuery(name="findIdByImageURL", query="SELECT i FROM Image i WHERE i.imageURL LIKE :imageURL"),
-        @NamedQuery(name="deleteImageByImageURL", query="DELETE FROM Image i WHERE i.imageId = :imageId"),
-        @NamedQuery(name="setNewImageById", query="UPDATE Image i SET i.imageURL = :imageURL WHERE i.imageId = :imageId")
+        @NamedQuery(name="deleteImageByImageId", query="DELETE FROM Image i WHERE i.imageId = :imageId"),
+        @NamedQuery(name="setNewImageById", query="UPDATE Image i SET i.imageURL = :imageURL WHERE i.imageId = :imageId"),
+        @NamedQuery(name="getImageByImageId", query="SELECT i FROM Image i WHERE i.imageId = :imageId")
+
 })
 public class Image implements Serializable{
 

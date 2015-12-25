@@ -20,8 +20,7 @@ public class CommentService implements CommentServiceLocal {
     @PersistenceContext(unitName = "NewPersistenceUnit")
     private EntityManager em;
 
-    @Inject
-    @DefaultLogger
+    @Inject @DefaultLogger
     private Logger logger;
 
     @Override
@@ -35,33 +34,32 @@ public class CommentService implements CommentServiceLocal {
     }
 
     @Override
-    public JsfMessage removeComment(String commentText) {
-        Comment selectedComment;
-        try{
-            selectedComment = (Comment) em.createNamedQuery("findComment").setParameter("commentText", commentText).getSingleResult();
-        }catch (NoResultException e){
-            return new JsfMessage("Error removing comment!", "Error in removing comment, please try again.", JsfMessage.MessageType.ERROR);
-        }
-        em.createNamedQuery("deleteCommentByCommentId").setParameter("commentId", selectedComment.getCommentId()).executeUpdate();
-        return new JsfMessage("Comment deleted!", "Comment successfully deleted.", JsfMessage.MessageType.SUCCESS);
-    }
-
-    @Override
-    public JsfMessage updateComment(String currentCommentText, String newCommentText) {
+    public JsfMessage updateComment(Comment comment) {
         Comment selectedComment;
         try {
-            selectedComment = (Comment) em.createNamedQuery("findComment").setParameter("commentText", currentCommentText).getSingleResult();
+            selectedComment = (Comment) em.createNamedQuery("getCommentById").setParameter("commentId", comment.getCommentId()).getSingleResult();
         } catch (NoResultException e) {
             return new JsfMessage("Error updating comment!", "Error in updating comment, please try again.", JsfMessage.MessageType.ERROR);
         }
-        em.createNamedQuery("setCommentById").setParameter("commentText", newCommentText).setParameter("commentId", selectedComment.getCommentId()).executeUpdate();
-        return new JsfMessage("Comment updated!", "Comment successfully updated.", JsfMessage.MessageType.SUCCESS);
+        em.createNamedQuery("setCommentById").setParameter("commentText", comment.getCommentText()).setParameter("commentId", selectedComment.getCommentId()).executeUpdate();
+        return new JsfMessage("Category updated!", "Category successfully updated.", JsfMessage.MessageType.SUCCESS);
+    }
+
+    @Override
+    public JsfMessage removeComment(int commentId) {
+        Comment selectedComment;
+        try {
+            selectedComment = (Comment) em.createNamedQuery("getCommentById").setParameter("commentId", commentId).getSingleResult();
+        } catch (NoResultException e) {
+            return new JsfMessage("Error updating comment!", "Error in updating comment, please try again.", JsfMessage.MessageType.ERROR);
+        }
+        em.createNamedQuery("deleteCommentByCommentId").setParameter("commentId", selectedComment.getCommentId()).executeUpdate();
+        return new JsfMessage("Category deleted!", "Category successfully deleted.", JsfMessage.MessageType.SUCCESS);
     }
 
     @Override
     public Collection<Comment> allComment(int commentId) {
         Collection<Comment> result = null;
-
         try {
             Collection<Comment> selectedCategories = em.createNamedQuery("getCommentById", Comment.class).setParameter("commentId", commentId).getResultList();
             result = selectedCategories;

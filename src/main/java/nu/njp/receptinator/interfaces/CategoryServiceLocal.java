@@ -17,10 +17,10 @@ public interface CategoryServiceLocal extends Serializable {
 
     JsfMessage addCategory(Category category);
 
-    JsfMessage removeCategory(String categoryName);
-
-    JsfMessage updateCategory(String oldCategoryName, String newCategoryName);
-
     Collection<Category> allCategories(int categoryId);
+
+    JsfMessage updateCategory(Category category);
+
+    JsfMessage removeCategory(int categoryId);
 
 }

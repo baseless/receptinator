@@ -12,7 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.Collection;
-import java.util.Optional;
+
 
 /**
  * Created by Andreas och Mattias on 2015-12-21.
@@ -37,27 +37,26 @@ public class CategoryService implements CategoryServiceLocal {
     }
 
     @Override
-    public JsfMessage removeCategory(String categoryName) {
+    public JsfMessage updateCategory(Category category) {
         Category selectedCategory;
-        try{
-            selectedCategory = (Category) em.createNamedQuery("findIdByCategoryName").setParameter("categoryName", categoryName).getSingleResult();
-        }catch (NoResultException e){
+        try {
+            selectedCategory = (Category) em.createNamedQuery("getCategoriesById").setParameter("categoryId", category.getCategoryId()).getSingleResult();
+        } catch (NoResultException e) {
+            return new JsfMessage("Error updating category!", "Error in updating category, please try again.", JsfMessage.MessageType.ERROR);
+        }
+        em.createNamedQuery("setCategoryNameById").setParameter("categoryName", category.getCategoryName()).setParameter("categoryId", selectedCategory.getCategoryId()).executeUpdate();
+        return new JsfMessage("Category updated!", "Category successfully updated.", JsfMessage.MessageType.SUCCESS);
+    }
+
+    public JsfMessage removeCategory(int categoryId) {
+        Category selectedCategory;
+        try {
+            selectedCategory = (Category) em.createNamedQuery("getCategoriesById").setParameter("categoryId", categoryId).getSingleResult();
+        } catch (NoResultException e) {
             return new JsfMessage("Error removing category!", "Error in removing category, please try again.", JsfMessage.MessageType.ERROR);
         }
         em.createNamedQuery("deleteCategoryByCategoryId").setParameter("categoryId", selectedCategory.getCategoryId()).executeUpdate();
         return new JsfMessage("Category deleted!", "Category successfully deleted.", JsfMessage.MessageType.SUCCESS);
-    }
-
-    @Override
-    public JsfMessage updateCategory(String categoryName, String newCategoryName) {
-        Category selectedCategory;
-        try {
-            selectedCategory = (Category) em.createNamedQuery("findIdByCategoryName").setParameter("categoryName", categoryName).getSingleResult();
-        } catch (NoResultException e) {
-            return new JsfMessage("Error updating category!", "Error in updating category, please try again.", JsfMessage.MessageType.ERROR);
-        }
-        em.createNamedQuery("setCategoryNameById").setParameter("categoryName", newCategoryName).setParameter("categoryId", selectedCategory.getCategoryId()).executeUpdate();
-        return new JsfMessage("Category updated!", "Category successfully updated.", JsfMessage.MessageType.SUCCESS);
     }
 
     @Override
@@ -71,7 +70,6 @@ public class CategoryService implements CategoryServiceLocal {
         }
             return result;
         }
-
-    }
+}
 
 

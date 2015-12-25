@@ -75,8 +75,6 @@ public class PostMail {
         }
     }
 
-
-
     public String getNewPassword() {
         return newPassword;
     }

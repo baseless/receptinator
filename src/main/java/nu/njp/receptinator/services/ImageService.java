@@ -29,29 +29,28 @@ public class ImageService implements ImageServiceLocal{
         return new JsfMessage("Image created!", "Image successfully created.", JsfMessage.MessageType.SUCCESS);
     }
 
-
     @Override
-    public JsfMessage removeImage(String imageUrl) {
-        Image selectedImage;
-        try{
-            selectedImage = (Image) em.createNamedQuery("findIdByImageURL").setParameter("imageURL", imageUrl).getSingleResult();
-        }catch (NoResultException e){
-            return new JsfMessage("Error removing image!", "Error in removing image, please try again.", JsfMessage.MessageType.ERROR);
-        }
-        em.createNamedQuery("deleteImageByImageURL").setParameter("imageId", selectedImage.getImageId()).executeUpdate();
-        return new JsfMessage("Image deleted!", "Image successfully deleted.", JsfMessage.MessageType.SUCCESS);
-    }
-
-
-    @Override
-    public JsfMessage updateImage(String currentImageURL, String newImageURL) {
+    public JsfMessage updateImage(Image image) {
         Image selectedImage;
         try {
-            selectedImage = (Image) em.createNamedQuery("findIdByImageURL").setParameter("imageURL", currentImageURL).getSingleResult();
+            selectedImage = (Image) em.createNamedQuery("getImageByImageId").setParameter("imageId", image.getImageId()).getSingleResult();
         } catch (NoResultException e) {
             return new JsfMessage("Error updating image!", "Error in updating image, please try again.", JsfMessage.MessageType.ERROR);
         }
-        em.createNamedQuery("setNewImageById").setParameter("imageURL", newImageURL).setParameter("imageId", selectedImage.getImageId()).executeUpdate();
+        em.createNamedQuery("setNewImageById").setParameter("imageURL", image.getImageURL()).setParameter("imageURL", selectedImage.getImageId()).executeUpdate();
         return new JsfMessage("Category updated!", "Category successfully updated.", JsfMessage.MessageType.SUCCESS);
     }
+
+    @Override
+    public JsfMessage removeImage(int imageId) {
+        Image selectedImage;
+        try {
+            selectedImage = (Image) em.createNamedQuery("getImageByImageId").setParameter("imageId", imageId).getSingleResult();
+        } catch (NoResultException e) {
+            return new JsfMessage("Error updating image!", "Error in updating image, please try again.", JsfMessage.MessageType.ERROR);
+        }
+        em.createNamedQuery("deleteImageByImageId").setParameter("imageId", selectedImage.getImageId()).executeUpdate();
+        return new JsfMessage("Image deleted!", "Image successfully deleted.", JsfMessage.MessageType.SUCCESS);
+    }
+
 }

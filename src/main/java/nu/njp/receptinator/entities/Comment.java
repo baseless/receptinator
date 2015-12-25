@@ -11,7 +11,6 @@ import java.io.Serializable;
 @Table(name = "comments")
 @NamedQueries({
         @NamedQuery(name="deleteCommentByCommentId", query="DELETE FROM Comment c WHERE c.commentId = :commentId"),
-        @NamedQuery(name="findComment", query="SELECT c FROM Comment c WHERE c.commentText LIKE :commentText"),
         @NamedQuery(name="setCommentById", query="UPDATE Comment c SET c.commentText = :commentText WHERE c.commentId = :commentId"),
         @NamedQuery(name="getCommentById", query="SELECT c FROM Comment c WHERE c.commentId = :commentId"),
 })

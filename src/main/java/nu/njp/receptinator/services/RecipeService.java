@@ -69,7 +69,7 @@ public class RecipeService implements RecipeServiceLocal {
     }
 
     @Override
-    public JsfMessage editRecipe(Recipe recipe) {
+    public JsfMessage updateRecipe(Recipe recipe) {
         Recipe selectedRecipe;
         try {
             selectedRecipe = (Recipe) em.createNamedQuery("getRecipeById").setParameter("recipeId", recipe.getRecipeId()).getSingleResult();

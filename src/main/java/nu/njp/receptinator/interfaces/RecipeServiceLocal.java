@@ -16,6 +16,6 @@ public interface RecipeServiceLocal /*extends Serializable */{
     Recipe getRecipe(int recipeId);
     JsfMessage addRecipe(Recipe recipe);
     JsfMessage removeRecipe(int id);
-    JsfMessage editRecipe(Recipe recipe);
+    JsfMessage updateRecipe(Recipe recipe);
 
 }
