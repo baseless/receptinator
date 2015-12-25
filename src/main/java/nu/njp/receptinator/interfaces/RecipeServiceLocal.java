@@ -12,10 +12,10 @@ import java.util.Collection;
 
 public interface RecipeServiceLocal /*extends Serializable */{
 
-    Collection<Recipe> all();
-    Recipe get(int recipeId);
-    JsfMessage add(Recipe recipe);
-    JsfMessage remove(int id);
-    JsfMessage edit(Recipe recipe);
+    Collection<Recipe> allRecipe();
+    Recipe getRecipe(int recipeId);
+    JsfMessage addRecipe(Recipe recipe);
+    JsfMessage removeRecipe(int id);
+    JsfMessage editRecipe(Recipe recipe);
 
 }

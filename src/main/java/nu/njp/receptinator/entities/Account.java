@@ -1,5 +1,7 @@
 package nu.njp.receptinator.entities;
 
+import nu.njp.receptinator.core.util.PasswordGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -20,7 +22,7 @@ import java.io.Serializable;
 public class Account implements Serializable {
 
     public Account() {
-        salt = "1234567890";
+        salt = PasswordGenerator.generateSalt();
         status = Status.ACTIVE;
         permission = Permission.USER;
     }

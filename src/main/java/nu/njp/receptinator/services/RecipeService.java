@@ -20,28 +20,35 @@ public class RecipeService implements RecipeServiceLocal {
     private EntityManager em;
 
     @Override
-    public Collection<Recipe> all() {
+    public Collection<Recipe> allRecipe() {
         return null;
     }
 
     @Override
-    public Recipe get(int recipeId) {
+    public Recipe getRecipe(int recipeId) {
         return null;
     }
 
     @Override
-    public JsfMessage add(Recipe recipe) {
+    public JsfMessage addRecipe(Recipe recipe) {
+        try {
+            em.persist(recipe);
+        } catch (Exception e) {
+            return new JsfMessage("Error creating recipe!", "Error in creating recipe, please try again.", JsfMessage.MessageType.ERROR);
+        }
         return new JsfMessage("Recipe created!", "Recipe successfully created.", JsfMessage.MessageType.SUCCESS);
     }
 
     @Override
-    public JsfMessage remove(int id) {
-        return new JsfMessage("Recipe removed!", "Recipe successfully removed.", JsfMessage.MessageType.SUCCESS);
+    public JsfMessage removeRecipe(int id) {
+        return null;
     }
 
     @Override
-    public JsfMessage edit(Recipe recipe) {
+    public JsfMessage editRecipe(Recipe recipe) {
         return null;
     }
+
+
 
 }
