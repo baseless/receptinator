@@ -21,7 +21,6 @@ public class PostMail {
     private Session session;
     private MimeMessage message;
     private String textMessage;
-    private PasswordGenerator passwordGenerator;
 
     public PostMail(){
         properties = System.getProperties();
@@ -44,7 +43,7 @@ public class PostMail {
 
     public void setRecipient(Account account) {
         recipient = account;
-        newPassword = passwordGenerator.generatePassword();
+        newPassword = PasswordGenerator.generatePassword();
         textMessage = textMessageToClient();
         try {
             message = new MimeMessage(session);

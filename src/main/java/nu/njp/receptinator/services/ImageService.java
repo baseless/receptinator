@@ -1,13 +1,17 @@
 package nu.njp.receptinator.services;
 
 import nu.njp.receptinator.core.pojo.JsfMessage;
+import nu.njp.receptinator.core.qualifier.DefaultLogger;
 import nu.njp.receptinator.entities.Image;
 import nu.njp.receptinator.interfaces.ImageServiceLocal;
+import org.slf4j.Logger;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.util.Collection;
 
 /**
  * Created by Andreas och Mattias on 2015-12-21.
@@ -15,9 +19,12 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class ImageService implements ImageServiceLocal{
 
-
     @PersistenceContext(unitName = "NewPersistenceUnit")
     private EntityManager em;
+
+    @Inject
+    @DefaultLogger
+    private Logger logger;
 
     @Override
     public JsfMessage addImage(Image image) {
@@ -31,26 +38,37 @@ public class ImageService implements ImageServiceLocal{
 
     @Override
     public JsfMessage updateImage(Image image) {
-        Image selectedImage;
         try {
-            selectedImage = (Image) em.createNamedQuery("getImageByImageId").setParameter("imageId", image.getImageId()).getSingleResult();
+            em.merge(image);
         } catch (NoResultException e) {
             return new JsfMessage("Error updating image!", "Error in updating image, please try again.", JsfMessage.MessageType.ERROR);
         }
-        em.createNamedQuery("setNewImageById").setParameter("imageURL", image.getImageURL()).setParameter("imageURL", selectedImage.getImageId()).executeUpdate();
         return new JsfMessage("Category updated!", "Category successfully updated.", JsfMessage.MessageType.SUCCESS);
     }
 
     @Override
     public JsfMessage removeImage(int imageId) {
-        Image selectedImage;
         try {
-            selectedImage = (Image) em.createNamedQuery("getImageByImageId").setParameter("imageId", imageId).getSingleResult();
+            em.remove(em.find(Image.class, imageId));
         } catch (NoResultException e) {
             return new JsfMessage("Error updating image!", "Error in updating image, please try again.", JsfMessage.MessageType.ERROR);
         }
-        em.createNamedQuery("deleteImageByImageId").setParameter("imageId", selectedImage.getImageId()).executeUpdate();
         return new JsfMessage("Image deleted!", "Image successfully deleted.", JsfMessage.MessageType.SUCCESS);
     }
 
+    @Override
+    public Collection<Image> allImages() {
+        Collection<Image> result = null;
+        try {
+            result = em.createNamedQuery("getAllImages", Image.class).getResultList();
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+        }
+        return result;
+    }
+
+    @Override
+    public Image findImage(int imageId) {
+        return em.find(Image.class, imageId);
+    }
 }

@@ -12,9 +12,11 @@ import java.util.Collection;
 public interface CommentServiceLocal extends Serializable {
     JsfMessage addComment(Comment comment);
 
-    Collection<Comment> allComment(int commentId);
+    Collection<Comment> allComments();
 
     JsfMessage updateComment(Comment comment);
 
     JsfMessage removeComment(int commentId);
+
+    Comment findComment(int commentId);
 }

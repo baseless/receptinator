@@ -10,9 +10,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "comments")
 @NamedQueries({
-        @NamedQuery(name="deleteCommentByCommentId", query="DELETE FROM Comment c WHERE c.commentId = :commentId"),
-        @NamedQuery(name="setCommentById", query="UPDATE Comment c SET c.commentText = :commentText WHERE c.commentId = :commentId"),
-        @NamedQuery(name="getCommentById", query="SELECT c FROM Comment c WHERE c.commentId = :commentId"),
+        @NamedQuery(name="getAllComments", query="SELECT c FROM Comment c"),
 })
 public class Comment implements Serializable{
     @Id

@@ -26,18 +26,13 @@ public class AccountService implements AccountServiceLocal {
     @Override
     public Account authenticate(String userName, String password) {
         Account selectedAcc;
-
         try {
-            //hämta användare
             selectedAcc = (Account) em.createNamedQuery("findIdByUserName").setParameter("userName", userName).getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
 
-        //hasha lösenordet med användarens salt
         String hashedPwd = PasswordHasher.Hash256(password, selectedAcc.getSalt());
-
-        //jämför lösenorden
         if (hashedPwd.equals(selectedAcc.getPassword())) {
             return selectedAcc;
         } else {
@@ -56,9 +51,8 @@ public class AccountService implements AccountServiceLocal {
         return new JsfMessage("Account created!", "Account successfully created, please login.", JsfMessage.MessageType.SUCCESS);
     }
 
-
     @Override
-    public Account passwordLost(String email) {
+    public Account recoverPassword(String email) {
         Account selectedAcc;
         PostMail postMail = new PostMail();
         try {
@@ -73,6 +67,33 @@ public class AccountService implements AccountServiceLocal {
 
         return selectedAcc;
     }
+
+    @Override
+    public JsfMessage removeAccount(int accountId) {
+        try {
+            em.remove(em.find(Account.class, accountId));
+        } catch(Exception e){
+            return new JsfMessage("Error removing account!", "Error in removing account, please try again.", JsfMessage.MessageType.ERROR);
+        }
+        return new JsfMessage("Account removed!", "Account successfully removed.", JsfMessage.MessageType.SUCCESS);
+    }
+
+    @Override
+    public JsfMessage updateAccount(Account account) {
+        try {
+            em.merge(account);
+        } catch (NoResultException e) {
+            return new JsfMessage("Error updating account!", "Error in updating account, please try again.", JsfMessage.MessageType.ERROR);
+        }
+        return new JsfMessage("Account updated!", "Account successfully updated.", JsfMessage.MessageType.SUCCESS);
+    }
+
+    @Override
+    public Account findAccount(int accountId) {
+        return em.find(Account.class, accountId);
+    }
+
+
 }
 
 

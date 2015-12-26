@@ -29,11 +29,10 @@ public class RecipeService implements RecipeServiceLocal {
     private Logger logger;
 
     @Override
-    public Collection<Recipe> allRecipe(int recipeId) {
+    public Collection<Recipe> allRecipes() {
         Collection<Recipe> result = null;
         try {
-            Collection<Recipe> selectedRecipe = em.createNamedQuery("getRecipeById", Recipe.class).setParameter("recipeId", recipeId).getResultList();
-            result = selectedRecipe;
+            result = em.createNamedQuery("getAllRecipes", Recipe.class).getResultList();
         } catch (Exception e) {
             logger.warn(e.getMessage());
         }
@@ -41,9 +40,8 @@ public class RecipeService implements RecipeServiceLocal {
     }
 
     @Override
-    public Recipe getRecipe(int recipeId) {
-        Recipe selectedRecipe = (Recipe) em.createNamedQuery("getRecipeById").setParameter("recipeId", recipeId).getResultList();
-        return selectedRecipe;
+    public Recipe findRecipe(int recipeId) {
+        return em.find(Recipe.class, recipeId);
     }
 
     @Override
@@ -58,25 +56,21 @@ public class RecipeService implements RecipeServiceLocal {
 
     @Override
     public JsfMessage removeRecipe(int recipeId) {
-        Recipe selectedRecipe;
         try {
-            selectedRecipe = (Recipe) em.createNamedQuery("getRecipeById").setParameter("recipeId", recipeId).getSingleResult();
+            em.remove(em.find(Recipe.class, recipeId));
         } catch (NoResultException e) {
             return new JsfMessage("Error updating recipe!", "Error in updating recipe, please try again.", JsfMessage.MessageType.ERROR);
         }
-        em.createNamedQuery("deleteRecipeByRecipeId").setParameter("recipeId", selectedRecipe.getRecipeId()).executeUpdate();
         return new JsfMessage("Comment deleted!", "Comment successfully deleted.", JsfMessage.MessageType.SUCCESS);
     }
 
     @Override
     public JsfMessage updateRecipe(Recipe recipe) {
-        Recipe selectedRecipe;
         try {
-            selectedRecipe = (Recipe) em.createNamedQuery("getRecipeById").setParameter("recipeId", recipe.getRecipeId()).getSingleResult();
+            em.merge(recipe);
         } catch (NoResultException e) {
             return new JsfMessage("Error updating recipe!", "Error in updating recipe, please try again.", JsfMessage.MessageType.ERROR);
         }
-        em.createNamedQuery("setUpdateToRecipeTextAndRecipeNameById").setParameter("recipeText", recipe.getRecipeText()).setParameter("recipeName", recipe.getRecipeName()).setParameter("recipeId", selectedRecipe.getRecipeId()).executeUpdate();
         return new JsfMessage("Recipe updated!", "Recipe successfully updated.", JsfMessage.MessageType.SUCCESS);
     }
 }

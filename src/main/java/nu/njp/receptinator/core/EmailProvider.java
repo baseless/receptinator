@@ -22,7 +22,7 @@ public class EmailProvider implements Serializable {
     public boolean accountExist() { return account != null; }
 
     public boolean emailSender(String email) {
-        account = accountServiceLocal.passwordLost(email);
+        account = accountServiceLocal.recoverPassword(email);
         return  accountExist();
     }
 

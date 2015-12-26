@@ -12,8 +12,8 @@ import java.util.Collection;
 
 public interface RecipeServiceLocal /*extends Serializable */{
 
-    Collection<Recipe> allRecipe(int recipeId);
-    Recipe getRecipe(int recipeId);
+    Collection<Recipe> allRecipes();
+    Recipe findRecipe(int recipeId);
     JsfMessage addRecipe(Recipe recipe);
     JsfMessage removeRecipe(int id);
     JsfMessage updateRecipe(Recipe recipe);

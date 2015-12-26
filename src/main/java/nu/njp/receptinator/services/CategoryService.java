@@ -38,33 +38,33 @@ public class CategoryService implements CategoryServiceLocal {
 
     @Override
     public JsfMessage updateCategory(Category category) {
-        Category selectedCategory;
         try {
-            selectedCategory = (Category) em.createNamedQuery("getCategoriesById").setParameter("categoryId", category.getCategoryId()).getSingleResult();
+            em.merge(category);
         } catch (NoResultException e) {
             return new JsfMessage("Error updating category!", "Error in updating category, please try again.", JsfMessage.MessageType.ERROR);
         }
-        em.createNamedQuery("setCategoryNameById").setParameter("categoryName", category.getCategoryName()).setParameter("categoryId", selectedCategory.getCategoryId()).executeUpdate();
         return new JsfMessage("Category updated!", "Category successfully updated.", JsfMessage.MessageType.SUCCESS);
     }
 
     public JsfMessage removeCategory(int categoryId) {
-        Category selectedCategory;
         try {
-            selectedCategory = (Category) em.createNamedQuery("getCategoriesById").setParameter("categoryId", categoryId).getSingleResult();
+            em.remove(em.find(Category.class, categoryId));
         } catch (NoResultException e) {
             return new JsfMessage("Error removing category!", "Error in removing category, please try again.", JsfMessage.MessageType.ERROR);
         }
-        em.createNamedQuery("deleteCategoryByCategoryId").setParameter("categoryId", selectedCategory.getCategoryId()).executeUpdate();
         return new JsfMessage("Category deleted!", "Category successfully deleted.", JsfMessage.MessageType.SUCCESS);
     }
 
     @Override
-    public Collection<Category> allCategories(int categoryId) {
+    public Category findCategory(int categoryId) {
+        return em.find(Category.class, categoryId);
+    }
+
+    @Override
+    public Collection<Category> allCategories() {
         Collection<Category> result = null;
         try {
-            Collection<Category> selectedCategories = em.createNamedQuery("getCategoriesById", Category.class).setParameter("categoryId", categoryId).getResultList();
-            result = selectedCategories;
+            result = em.createNamedQuery("getAllCategories", Category.class).getResultList();
         }catch(Exception e){
                 logger.warn(e.getMessage());
         }

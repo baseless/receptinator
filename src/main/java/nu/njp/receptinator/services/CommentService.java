@@ -35,34 +35,34 @@ public class CommentService implements CommentServiceLocal {
 
     @Override
     public JsfMessage updateComment(Comment comment) {
-        Comment selectedComment;
         try {
-            selectedComment = (Comment) em.createNamedQuery("getCommentById").setParameter("commentId", comment.getCommentId()).getSingleResult();
+            em.merge(comment);
         } catch (NoResultException e) {
             return new JsfMessage("Error updating comment!", "Error in updating comment, please try again.", JsfMessage.MessageType.ERROR);
         }
-        em.createNamedQuery("setCommentById").setParameter("commentText", comment.getCommentText()).setParameter("commentId", selectedComment.getCommentId()).executeUpdate();
         return new JsfMessage("Category updated!", "Category successfully updated.", JsfMessage.MessageType.SUCCESS);
     }
 
     @Override
     public JsfMessage removeComment(int commentId) {
-        Comment selectedComment;
         try {
-            selectedComment = (Comment) em.createNamedQuery("getCommentById").setParameter("commentId", commentId).getSingleResult();
+            em.remove(em.find(Comment.class, commentId));
         } catch (NoResultException e) {
             return new JsfMessage("Error updating comment!", "Error in updating comment, please try again.", JsfMessage.MessageType.ERROR);
         }
-        em.createNamedQuery("deleteCommentByCommentId").setParameter("commentId", selectedComment.getCommentId()).executeUpdate();
         return new JsfMessage("Category deleted!", "Category successfully deleted.", JsfMessage.MessageType.SUCCESS);
     }
 
     @Override
-    public Collection<Comment> allComment(int commentId) {
+    public Comment findComment(int commentId) {
+        return em.find(Comment.class, commentId);
+    }
+
+    @Override
+    public Collection<Comment> allComments() {
         Collection<Comment> result = null;
         try {
-            Collection<Comment> selectedCategories = em.createNamedQuery("getCommentById", Comment.class).setParameter("commentId", commentId).getResultList();
-            result = selectedCategories;
+            result = em.createNamedQuery("getAllComments", Comment.class).getResultList();
         } catch (Exception e) {
             logger.warn(e.getMessage());
         }

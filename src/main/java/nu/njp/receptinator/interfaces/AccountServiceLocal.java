@@ -27,6 +27,9 @@ public interface AccountServiceLocal extends Serializable {
      */
     JsfMessage addAccount(Account account);
 
+    Account recoverPassword(String email);
 
-    Account passwordLost(String email);
+    JsfMessage removeAccount(int accountId);
+    JsfMessage updateAccount(Account account);
+    Account findAccount(int accountId);
 }

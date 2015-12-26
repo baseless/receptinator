@@ -17,10 +17,12 @@ public interface CategoryServiceLocal extends Serializable {
 
     JsfMessage addCategory(Category category);
 
-    Collection<Category> allCategories(int categoryId);
+    Collection<Category> allCategories();
 
     JsfMessage updateCategory(Category category);
 
     JsfMessage removeCategory(int categoryId);
+
+    Category findCategory(int categoryId);
 
 }

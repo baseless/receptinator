@@ -9,7 +9,7 @@ import java.util.Random;
  */
 public class PasswordGenerator {
     private static SecureRandom secureRandom = new SecureRandom();
-    private static Random random;
+    private static Random random = new Random();
     private static String numbersAndCharacters= "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabsdefghijklmnopqrstuvwxyz";
 
     public static String generatePassword() {
