@@ -9,6 +9,12 @@ import java.util.List;
  */
 @Entity
 @Table(name = "categories")
+@NamedQueries({
+        @NamedQuery(name="deleteCategoryByCategoryId", query="DELETE FROM Category c WHERE c.categoryId = :categoryId"),
+        @NamedQuery(name="findIdByCategoryName", query="SELECT c FROM Category c WHERE c.categoryName LIKE :categoryName"),
+        @NamedQuery(name="setCategoryNameById", query="UPDATE Category c SET c.categoryName = :categoryName WHERE c.categoryId = :categoryId"),
+        @NamedQuery(name="getCategoriesById", query="SELECT c FROM Category c WHERE c.categoryId = :categoryId"),
+})
 public class Category implements Serializable {
 
     @Id
@@ -18,6 +24,7 @@ public class Category implements Serializable {
     private String categoryName;
 
     public Category() {
+
     }
 
     public Category(String categoryName) {

@@ -43,7 +43,6 @@ public class AccountService implements AccountServiceLocal {
         } else {
             return null;
         }
-
     }
 
     @Override

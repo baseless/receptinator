@@ -9,6 +9,11 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "recipes")
+@NamedQueries({
+        @NamedQuery(name="deleteRecipeByRecipeId", query="DELETE FROM Recipe r WHERE r.recipeId = :recipeId"),
+        @NamedQuery(name="setUpdateToRecipeTextAndRecipeNameById", query="UPDATE Recipe r SET r.recipeText = :recipeText, r.recipeName = :recipeName WHERE r.recipeId = :recipeId"),
+        @NamedQuery(name="getRecipeById", query="SELECT r FROM Recipe r WHERE r.recipeId = :recipeId"),
+})
 public class Recipe implements Serializable {
 
     @Id
