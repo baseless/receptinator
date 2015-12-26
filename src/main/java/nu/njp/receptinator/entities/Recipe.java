@@ -11,8 +11,6 @@ import java.io.Serializable;
 @Table(name = "recipes")
 @NamedQueries({
         @NamedQuery(name="deleteRecipeByRecipeId", query="DELETE FROM Recipe r WHERE r.recipeId = :recipeId"),
-        @NamedQuery(name="selectRecipeName", query="SELECT r FROM Recipe r WHERE r.recipeName LIKE :recipeName"),
-        @NamedQuery(name="selectRecipeText", query="SELECT r FROM Recipe r WHERE r.recipeText LIKE :recipeText"),
         @NamedQuery(name="setUpdateToRecipeTextAndRecipeNameById", query="UPDATE Recipe r SET r.recipeText = :recipeText, r.recipeName = :recipeName WHERE r.recipeId = :recipeId"),
         @NamedQuery(name="getRecipeById", query="SELECT r FROM Recipe r WHERE r.recipeId = :recipeId"),
 })

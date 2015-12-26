@@ -24,6 +24,7 @@ public class Category implements Serializable {
     private String categoryName;
 
     public Category() {
+
     }
 
     public Category(String categoryName) {
