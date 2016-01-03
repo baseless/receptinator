@@ -15,16 +15,18 @@
                     <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Category</th>
                         <th>Created by</th>
                         <th>Date</th>
                     </tr>
                     <ui:repeat value="#{recipes.recipeList}" var="recipe">
                         <tr>
                             <td>
-                                <h:link value="#{recipe.recipeName}" outcome="list">
+                                <h:link value="#{recipe.recipeName}" outcome="view">
                                     <f:param name="id" value="#{recipe.recipeId}" />
                                 </h:link>
                             </td>
+                            <td>#{recipe.recipeName}</td>
                             <td>#{recipe.recipeName}</td>
                             <td>#{recipe.recipeName}</td>
                         </tr>

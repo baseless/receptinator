@@ -1,13 +1,15 @@
 package nu.njp.receptinator.backing;
 
 import nu.njp.receptinator.core.qualifier.DefaultLogger;
+import nu.njp.receptinator.entities.Category;
 import nu.njp.receptinator.entities.Recipe;
+import nu.njp.receptinator.interfaces.CategoryServiceLocal;
+import nu.njp.receptinator.interfaces.RecipeServiceLocal;
 import org.slf4j.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Password recovery backing bean
@@ -21,13 +23,14 @@ public class RecipesBacking {
     @DefaultLogger
     private Logger logger;
 
-    private List<Recipe> recipeList;
+    @Inject
+    RecipeServiceLocal recipesService;
 
-    public RecipesBacking() {
-        setRecipeList(new ArrayList<>());
-        getRecipeList().add(new Recipe("Some stew", "Stir, shake, finished!"));
-    }
+    @Inject
+    CategoryServiceLocal categoryService;
 
+    private Collection<Recipe> recipeList;
+    private Collection<Category> categories;
 
     public Logger getLogger() {
         return logger;
@@ -37,11 +40,21 @@ public class RecipesBacking {
         this.logger = logger;
     }
 
-    public List<Recipe> getRecipeList() {
+    public Collection<Recipe> getRecipeList() {
+        recipeList = recipesService.allRecipes();
         return recipeList;
     }
 
-    public void setRecipeList(List<Recipe> recipeList) {
+    public void setRecipeList(Collection<Recipe> recipeList) {
         this.recipeList = recipeList;
+    }
+
+    public Collection<Category> getCategories() {
+        categories = categoryService.allCategories();
+        return categories;
+    }
+
+    public void setCategories(Collection<Category> categories) {
+        this.categories = categories;
     }
 }

@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -30,7 +31,7 @@ public class RecipeService implements RecipeServiceLocal {
 
     @Override
     public Collection<Recipe> allRecipes() {
-        Collection<Recipe> result = null;
+        Collection<Recipe> result = new ArrayList<>();
         try {
             result = em.createNamedQuery("getAllRecipes", Recipe.class).getResultList();
         } catch (Exception e) {
