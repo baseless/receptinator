@@ -51,7 +51,6 @@ public class AccountsBacking extends BackingBase{
         Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         accountId = Integer.parseInt(params.get("id"));
 
-
         if(account == null)
             account = accountService.findAccount(accountId);
         return account;
