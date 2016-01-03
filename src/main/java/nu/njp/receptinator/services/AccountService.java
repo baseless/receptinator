@@ -1,17 +1,23 @@
 package nu.njp.receptinator.services;
 
 import nu.njp.receptinator.core.pojo.JsfMessage;
+import nu.njp.receptinator.core.qualifier.DefaultLogger;
 import nu.njp.receptinator.core.qualifier.Mocked;
 import nu.njp.receptinator.core.util.PasswordHasher;
 import nu.njp.receptinator.core.util.PostMail;
 import nu.njp.receptinator.entities.Account;
+import nu.njp.receptinator.entities.Recipe;
 import nu.njp.receptinator.interfaces.AccountServiceLocal;
+import org.slf4j.Logger;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * AccountServiceLocal
@@ -22,6 +28,10 @@ public class AccountService implements AccountServiceLocal {
 
     @PersistenceContext(unitName = "NewPersistenceUnit")
     private EntityManager em;
+
+    @Inject
+    @DefaultLogger
+    private Logger logger;
 
     @Override
     public Account authenticate(String userName, String password) {
@@ -81,6 +91,7 @@ public class AccountService implements AccountServiceLocal {
     @Override
     public JsfMessage updateAccount(Account account) {
         try {
+            account.setPassword(PasswordHasher.Hash256(account.getPassword(), account.getSalt()));
             em.merge(account);
         } catch (NoResultException e) {
             return new JsfMessage("Error updating account!", "Error in updating account, please try again.", JsfMessage.MessageType.ERROR);
@@ -91,6 +102,17 @@ public class AccountService implements AccountServiceLocal {
     @Override
     public Account findAccount(int accountId) {
         return em.find(Account.class, accountId);
+    }
+
+    @Override
+    public Collection<Account> allAccounts() {
+        Collection<Account> result = new ArrayList<>();
+        try {
+            result = em.createNamedQuery("getAllAccounts", Account.class).getResultList();
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+        }
+        return result;
     }
 
 

@@ -5,6 +5,7 @@ import nu.njp.receptinator.entities.Account;
 
 import javax.ejb.Local;
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * AccountServiceLocal interface
@@ -32,4 +33,5 @@ public interface AccountServiceLocal extends Serializable {
     JsfMessage removeAccount(int accountId);
     JsfMessage updateAccount(Account account);
     Account findAccount(int accountId);
+    Collection<Account> allAccounts();
 }

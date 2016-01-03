@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - receptinator@localhost" uuid="1784abc6-54fc-4617-9ef9-1c6f453e08b7">
+    <database-info product="MySQL" version="5.7.9-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="receptinator"/>
+    <table name="accounts" schema="" catalog="receptinator" type="TABLE">
+      <column name="accountId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="email" sqlType="VARCHAR" precision="300" scale="0" nullable="false" jdbcType="12"/>
+      <column name="firstName" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="lastName" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="permission" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="salt" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12"/>
+      <column name="status" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="userName" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="accountId"/>
+      <exported-key name="FK_8ci787csi1219anawqr1rb856" table="comments" schema="" catalog="receptinator" columns="accountId"/>
+      <exported-key name="FK_7hrgemq72q7i6w6ntsfd1cwlf" table="recipes" schema="" catalog="receptinator" columns="accountId"/>
+    </table>
+    <table name="categories" schema="" catalog="receptinator" type="TABLE">
+      <column name="categoryId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="categoryName" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="categoryId"/>
+      <exported-key name="FK_cpuiajahok503hfayno3rhur" table="recipes" schema="" catalog="receptinator" columns="categoryId"/>
+    </table>
+    <table name="comments" schema="" catalog="receptinator" type="TABLE">
+      <column name="commentId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="commentText" sqlType="VARCHAR" precision="500" scale="0" nullable="true" jdbcType="12"/>
+      <column name="accountId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="recipeId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="commentId"/>
+      <foreign-key name="FK_8ci787csi1219anawqr1rb856" columns="accountId" ref-table="accounts" ref-schema="" ref-catalog="receptinator" ref-columns="accountId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_8p12doroudoslbf0103810bqv" columns="recipeId" ref-table="recipes" ref-schema="" ref-catalog="receptinator" ref-columns="recipeId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_8ci787csi1219anawqr1rb856" unique="false" columns="accountId"/>
+      <index name="FK_8p12doroudoslbf0103810bqv" unique="false" columns="recipeId"/>
+    </table>
+    <table name="images" schema="" catalog="receptinator" type="TABLE">
+      <column name="imageId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="imageURL" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="recipeId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="imageId"/>
+      <foreign-key name="FK_miw4h2d0ghk7gfrj7rocplii0" columns="recipeId" ref-table="recipes" ref-schema="" ref-catalog="receptinator" ref-columns="recipeId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_miw4h2d0ghk7gfrj7rocplii0" unique="false" columns="recipeId"/>
+    </table>
+    <table name="recipes" schema="" catalog="receptinator" type="TABLE">
+      <column name="recipeId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="recipeName" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="recipeText" sqlType="VARCHAR" precision="2000" scale="0" nullable="true" jdbcType="12"/>
+      <column name="accountId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="categoryId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="recipeId"/>
+      <foreign-key name="FK_7hrgemq72q7i6w6ntsfd1cwlf" columns="accountId" ref-table="accounts" ref-schema="" ref-catalog="receptinator" ref-columns="accountId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_cpuiajahok503hfayno3rhur" columns="categoryId" ref-table="categories" ref-schema="" ref-catalog="receptinator" ref-columns="categoryId" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_8p12doroudoslbf0103810bqv" table="comments" schema="" catalog="receptinator" columns="recipeId"/>
+      <exported-key name="FK_miw4h2d0ghk7gfrj7rocplii0" table="images" schema="" catalog="receptinator" columns="recipeId"/>
+      <index name="FK_7hrgemq72q7i6w6ntsfd1cwlf" unique="false" columns="accountId"/>
+      <index name="FK_cpuiajahok503hfayno3rhur" unique="false" columns="categoryId"/>
+    </table>
+  </data-source>
+</component>

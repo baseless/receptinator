@@ -18,6 +18,7 @@ import java.io.Serializable;
         @NamedQuery(name="findIdByUserName", query="SELECT c FROM Account c WHERE c.userName LIKE :userName"),
         @NamedQuery(name="findIdByEmail", query="SELECT c FROM Account c WHERE c.email LIKE :email"),
         @NamedQuery(name="setPasswordById", query="UPDATE Account a SET a.password = :newPassword WHERE a.accountId = :accountId"),
+        @NamedQuery(name="getAllAccounts", query="SELECT r FROM Account r"),
 })
 public class Account implements Serializable {
 

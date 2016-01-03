@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h:outputLabel value="Accountlist:"/>
+</f:view>
+<ui:composition template="/WEB-INF/templates/main.xhtml">
+    <ui:define name="content">
+        <div class="row-fluid">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Email</th>
+                        <th>UserName</th>
+                        <th>FirstName</th>
+                        <th>LastName</th>
+                        <th>Permission</th>
+                        <th>Status</th>
+
+                    </tr>
+                    <ui:repeat value="#{accountEdit.accountList}" var="account">
+                        <tr>
+                            <td>
+                                <h:link value="#{account.accountId}" outcome="edit">
+                                    <f:param name="id" value="#{account.accountId}" />
+                                </h:link>
+                            </td>
+                            <td>#{account.email}</td>
+                            <td>#{account.userName}</td>
+                            <td>#{account.firstName}</td>
+                            <td>#{account.lastName}</td>
+                            <td>#{account.permission}</td>
+                            <td>#{account.status}</td>
+
+                        </tr>
+                    </ui:repeat>
+                    </thead>
+                </table>
+            </div>
+            <div class="col-xs-2"></div>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>
