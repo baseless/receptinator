@@ -33,7 +33,6 @@ public class CategoryBacking extends BackingBase {
     private Collection<Category> categoryList;
 
 
-
     public Category getCategory() {/*
         FacesContext context = FacesContext.getCurrentInstance();
         Map<String, String> params = context.getExternalContext().getRequestParameterMap();
