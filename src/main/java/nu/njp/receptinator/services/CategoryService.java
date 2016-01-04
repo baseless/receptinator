@@ -66,10 +66,10 @@ public class CategoryService implements CategoryServiceLocal {
         try {
             result = em.createNamedQuery("getAllCategories", Category.class).getResultList();
         }catch(Exception e){
-                logger.warn(e.getMessage());
+            logger.warn(e.getMessage());
         }
-            return result;
-        }
+        return result;
+    }
 }
 
 

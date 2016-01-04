@@ -34,4 +34,8 @@ public class AuthenticationProvider implements Serializable {
         account = null;
         return "/login";
     }
+
+    public Account getAccount(){
+        return account;
+    }
 }
