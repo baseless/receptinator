@@ -29,43 +29,24 @@ public class CategoryBacking extends BackingBase {
     @Inject
     CategoryServiceLocal categoryService;
 
-    @Basic(optional = true)
-    @Size(min = 1, max = 200)
-    private String categoryName;
-
     private Category category;
-    private int categoryId;
     private Collection<Category> categoryList;
 
 
-    public String getCategoryName() {
-        return categoryName;
-    }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public Category getCategory() {
+    public Category getCategory() {/*
         FacesContext context = FacesContext.getCurrentInstance();
         Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         categoryId = Integer.parseInt(params.get("id"));
-
+        */
         if(category == null)
-            category = categoryService.findCategory(categoryId);
+            category = new Category();
+            //category = categoryService.findCategory(categoryId);
         return category;
     }
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
     }
 
     public Collection<Category> getCategoryList() {
@@ -77,13 +58,15 @@ public class CategoryBacking extends BackingBase {
         this.categoryList = categoryList;
     }
 
-    public JsfMessage addNewCategory(){
-        System.out.println("--------------------------------");
-        System.out.println(category.getCategoryId());
-        System.out.println(category.getCategoryName());
-        System.out.println("----------------------------------");
+    public String addNewCategory(){
+
+        JsfMessage result = categoryService.addCategory(category);
+        setMessage(result);
+        return null;
+        /*
         if(category != null)
-         categoryService.updateCategory(category);
-        return new JsfMessage("Category Updated!", "Category was successfully updated", JsfMessage.MessageType.SUCCESS);
+            categoryService.addCategory(category);
+        return new JsfMessage("Category created!", "Category was successfully created", JsfMessage.MessageType.SUCCESS);
+        */
     }
 }
