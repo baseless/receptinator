@@ -3,6 +3,7 @@ package nu.njp.receptinator.entities;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.sql.Date;
 
 /**
  * Created by Andreas och Mattias on 2015-12-18.
@@ -29,6 +30,8 @@ public class Recipe implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name="accountId")
     private Account account;
+
+    private Date created;
 
     public Recipe() {
     }
@@ -76,5 +79,13 @@ public class Recipe implements Serializable {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
     }
 }

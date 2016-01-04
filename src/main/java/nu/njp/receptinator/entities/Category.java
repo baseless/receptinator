@@ -43,4 +43,8 @@ public class Category implements Serializable {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
+
+    public String toString(){
+        return categoryName;
+    }
 }
