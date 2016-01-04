@@ -41,7 +41,9 @@ public class RecipesBacking {
     }
 
     public Collection<Recipe> getRecipeList() {
-        recipeList = recipesService.allRecipes();
+        if(recipeList == null) {
+            recipeList = recipesService.allRecipes();
+        }
         return recipeList;
     }
 
@@ -50,7 +52,9 @@ public class RecipesBacking {
     }
 
     public Collection<Category> getCategories() {
-        categories = categoryService.allCategories();
+        if(recipeList == null) {
+            categories = categoryService.allCategories();
+        }
         return categories;
     }
 

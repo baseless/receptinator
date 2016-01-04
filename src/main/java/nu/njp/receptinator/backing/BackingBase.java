@@ -29,4 +29,8 @@ public abstract class BackingBase {
     protected HttpServletRequest getRequest() { return (HttpServletRequest) getContext().getExternalContext().getRequest(); }
 
     protected void redirect(String path) throws IOException { getContext().getExternalContext().redirect(path); }
+
+    public boolean isPostback() {
+        return FacesContext.getCurrentInstance().isPostback();
+    }
 }
