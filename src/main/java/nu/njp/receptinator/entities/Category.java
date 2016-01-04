@@ -1,6 +1,8 @@
 package nu.njp.receptinator.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "categoryId")
     private int categoryId;
+
     private String categoryName;
 
     public Category() {
