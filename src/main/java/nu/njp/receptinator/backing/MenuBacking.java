@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Login backing bean
+ * Menu backing bean
  * @author Daniel Ryhle <daniel@ryhle.se>
  */
 @Named("menu")
@@ -29,7 +29,7 @@ public class MenuBacking {
 
     /**
      * Not so pretty way of generating menu links in top navbar
-     * @return
+     * @return collection of menu items
      */
     public Collection<JsfMenuItem> getMenu() {
         Collection<JsfMenuItem> items = new ArrayList<>();
