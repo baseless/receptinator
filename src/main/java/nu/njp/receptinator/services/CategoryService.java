@@ -30,6 +30,7 @@ public class CategoryService implements CategoryServiceLocal {
     public JsfMessage addCategory(Category category) {
         try {
             em.persist(category);
+            em.flush();
         } catch (Exception e) {
             return new JsfMessage("Error creating category!", "Error in creating category, please try again.", JsfMessage.MessageType.ERROR);
         }
@@ -40,6 +41,7 @@ public class CategoryService implements CategoryServiceLocal {
     public JsfMessage updateCategory(Category category) {
         try {
             em.merge(category);
+            em.flush();
         } catch (NoResultException e) {
             return new JsfMessage("Error updating category!", "Error in updating category, please try again.", JsfMessage.MessageType.ERROR);
         }
@@ -49,6 +51,7 @@ public class CategoryService implements CategoryServiceLocal {
     public JsfMessage removeCategory(int categoryId) {
         try {
             em.remove(em.find(Category.class, categoryId));
+            em.flush();
         } catch (NoResultException e) {
             return new JsfMessage("Error removing category!", "Error in removing category, please try again.", JsfMessage.MessageType.ERROR);
         }
@@ -64,7 +67,8 @@ public class CategoryService implements CategoryServiceLocal {
     public Collection<Category> allCategories() {
         Collection<Category> result = null;
         try {
-            result = em.createNamedQuery("getAllCategories", Category.class).getResultList();
+            result = em.createNamedQuery("getAllActiveCategories", Category.class).getResultList();
+            em.flush();
         }catch(Exception e){
             logger.warn(e.getMessage());
         }

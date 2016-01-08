@@ -1,6 +1,7 @@
 package nu.njp.receptinator.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.sql.Date;
@@ -11,9 +12,9 @@ import java.sql.Date;
 @Entity
 @Table(name = "recipes")
 @NamedQueries({
-        @NamedQuery(name="getAllRecipes", query="SELECT r FROM Recipe r"),
+        @NamedQuery(name= "getAllActiveRecipes", query="SELECT r FROM Recipe r WHERE r.status = 'ACTIVE'"),
 })
-public class Recipe implements Serializable {
+public class Recipe extends BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +34,12 @@ public class Recipe implements Serializable {
 
     private Date created;
 
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private Status status;
+
     public Recipe() {
+        status = Status.ACTIVE;
     }
 
     public Recipe(String recipeName, String recipeText){
@@ -87,5 +93,13 @@ public class Recipe implements Serializable {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

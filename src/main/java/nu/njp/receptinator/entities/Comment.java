@@ -1,6 +1,7 @@
 package nu.njp.receptinator.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -10,9 +11,9 @@ import java.io.Serializable;
 @Entity
 @Table(name = "comments")
 @NamedQueries({
-        @NamedQuery(name="getAllComments", query="SELECT c FROM Comment c"),
+        @NamedQuery(name= "getAllActiveComments", query="SELECT c FROM Comment c WHERE c.status = 'ACTIVE'"),
 })
-public class Comment implements Serializable{
+public class Comment extends BaseEntity implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commentId")
@@ -28,7 +29,12 @@ public class Comment implements Serializable{
     @JoinColumn(name = "recipeId")
     private Recipe recipe;
 
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private Status status;
+
     public Comment() {
+        status = Status.ACTIVE;
     }
 
     public Comment(String commentText) {
@@ -65,5 +71,13 @@ public class Comment implements Serializable{
 
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
+    }
+
+    public BaseEntity.Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

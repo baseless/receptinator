@@ -30,7 +30,7 @@ public interface AccountServiceLocal extends Serializable {
 
     Account recoverPassword(String email);
 
-    JsfMessage removeAccount(int accountId);
+    JsfMessage removeAccount(int accountId) throws javax.ejb.EJBTransactionRolledbackException;
     JsfMessage updateAccount(Account account);
     Account findAccount(int accountId);
     Collection<Account> allAccounts();
