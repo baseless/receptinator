@@ -15,36 +15,36 @@
                     <h:form>
                         <h3>Add recipe</h3>
                         <div class="form-group">
-                            <c:if test="#{recipesAdd.message.messageTitle ne null}">
-                                <c:if test="#{recipesAdd.message.messageType.toString() eq 'ERROR'}">
-                                    <div class="alert alert-danger"><span class="glyphicon glyphicon glyphicon-alert" style="padding-right: 6px;"></span><strong>#{recipesAdd.message.messageTitle}</strong> #{recipesAdd.message.messageDescription}</div>
+                            <c:if test="#{recipeAdd.message.messageTitle ne null}">
+                                <c:if test="#{recipeAdd.message.messageType.toString() eq 'ERROR'}">
+                                    <div class="alert alert-danger"><span class="glyphicon glyphicon glyphicon-alert" style="padding-right: 6px;"></span><strong>#{recipeAdd.message.messageTitle}</strong> #{recipeAdd.message.messageDescription}</div>
                                 </c:if>
-                                <c:if test="#{recipesAdd.message.messageType.toString() eq 'SUCCESS'}">
-                                    <div class="alert alert-success"><span class="glyphicon glyphicon glyphicon-ok" style="padding-right: 6px;"></span><strong>#{recipesAdd.message.messageTitle}</strong> #{recipesAdd.message.messageDescription}</div>
-                                    <h:button styleClass="btn btn-default" value="To login" outcome="index"></h:button>
+                                <c:if test="#{recipeAdd.message.messageType.toString() eq 'SUCCESS'}">
+                                    <div class="alert alert-success"><span class="glyphicon glyphicon glyphicon-ok" style="padding-right: 6px;"></span><strong>#{recipeAdd.message.messageTitle}</strong> #{recipeAdd.message.messageDescription}</div>
                                 </c:if>
                             </c:if>
                         </div>
-                        <c:if test="#{recipesAdd.message.messageType.toString() ne 'SUCCESS'}">
+                        <c:if test="#{recipeAdd.message.messageType.toString() ne 'SUCCESS'}">
                             <div class="form-group">
-                                <h:outputLabel value="Recipe name"></h:outputLabel>
-                                <h:inputText id="recipeName" styleClass="form-control" value="#{recipesAdd.recipe.recipeName}"></h:inputText>
+                                <h:outputLabel value="Name"></h:outputLabel>
+                                <h:inputText id="recipeName" styleClass="form-control" value="#{recipeAdd.recipe.recipeName}"></h:inputText>
                                 <h:message styleClass="label label-danger" for="recipeName" />
                             </div>
                             <div class="form-group">
-                                <h:outputLabel value="Recipe text"></h:outputLabel>
-                                <h:inputText id="recipeText" styleClass="form-control" value="#{recipesAdd.recipe.recipeText}"></h:inputText>
+                                <h:outputLabel value="Description"></h:outputLabel>
+                                <h:inputTextarea id="recipeText" styleClass="form-control" value="#{recipeAdd.recipe.recipeText}"></h:inputTextarea>
                                 <h:message styleClass="label label-danger" for="recipeText" />
                             </div>
 
                             <div class ="form-group">
-                            <h:selectOneMenu value="#{recipesAdd.categoryId}">
-                                <f:selectItems value="#{recipesAdd.categoryList}" var="c" itemLabel="#{c.categoryName}" itemValue="#{c.categoryId}" />
-                            </h:selectOneMenu>
+                                <h:outputLabel value="Category"></h:outputLabel>
+                                <h:selectOneMenu styleClass="form-control" value="#{recipeAdd.categoryId}">
+                                    <f:selectItems value="#{recipeAdd.categoryList}" var="c" itemLabel="#{c.categoryName}" itemValue="#{c.categoryId}" />
+                                </h:selectOneMenu>
                             </div>
 
-                            <h:commandButton style="margin-right: 5px;" styleClass="btn btn-success" value="Add recipe" action="#{recipesAdd.save}"><f:ajax execute="@form" render="@form" /></h:commandButton>
-
+                            <h:commandButton style="margin-right: 5px;" styleClass="btn btn-success" value="Add recipe" action="#{recipeAdd.save}"><f:ajax execute="@form" render="@form" /></h:commandButton>
+                            <h:button styleClass="btn btn-default" immediate="true" value="Cancel" outcome="list"></h:button>
                         </c:if>
                     </h:form>
                 </div>

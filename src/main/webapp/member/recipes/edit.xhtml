@@ -4,8 +4,61 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="/WEB-INF/templates/main.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+            <div class="row-fluid">
+                <div class="col-xs-4"></div>
+                <div class="col-xs-4">
+                    <f:metadata>
+                        <f:viewParam name="id" value="#{recipeEditBacking.recipe}" converter="#{recipeConverter}"
+                                     converterMessage="Unknown recipe id."
+                                     required="true" requiredMessage="Bad request, unknown id."
+                        />
+                    </f:metadata>
+
+                    <c:if test="#{recipeEditBacking.message ne null}">
+                        <c:if test="#{recipeEditBacking.message.messageType.toString() eq 'ERROR'}">
+                            <div class="alert alert-danger"><span class="glyphicon glyphicon glyphicon-alert" style="padding-right: 6px;"></span><strong>#{recipeEditBacking.message.messageTitle}</strong> #{recipeEditBacking.message.messageDescription}</div>
+                        </c:if>
+                        <c:if test="#{recipeEditBacking.message.messageType.toString() eq 'SUCCESS'}">
+                            <div class="alert alert-success"><span class="glyphicon glyphicon glyphicon-ok" style="padding-right: 6px;"></span><strong>#{recipeEditBacking.message.messageTitle}</strong> #{recipeEditBacking.message.messageDescription}</div>
+                        </c:if>
+                    </c:if>
+
+                    <h:form rendered="#{not empty recipeEditBacking.recipe}">
+
+                        <h3>Edit account</h3>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Name"></h:outputLabel>
+                            <h:inputText id="recipeName" styleClass="form-control" value="#{recipeEditBacking.recipe.recipeName}"></h:inputText>
+                            <h:message styleClass="label label-danger" for="recipeName" />
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="Description"></h:outputLabel>
+                            <h:inputTextarea id="recipeText" styleClass="form-control" value="#{recipeEditBacking.recipe.recipeText}"></h:inputTextarea>
+                            <h:message styleClass="label label-danger" for="recipeText" />
+                        </div>
+
+                        <div class ="form-group">
+                            <h:outputLabel value="Category"></h:outputLabel>
+                            <h:selectOneMenu styleClass="form-control" value="#{recipeEditBacking.categoryId}">
+                                <f:selectItems value="#{recipeEditBacking.categories}" var="c" itemLabel="#{c.categoryName}" itemValue="#{c.categoryId}" />
+                            </h:selectOneMenu>
+                        </div>
+
+                        <h:commandButton style="margin-right: 5px;" styleClass="btn btn-success" value="Update recipe" action="#{recipeEditBacking.update}"></h:commandButton>
+                        <h:commandButton style="margin-right: 5px;" styleClass="btn btn-danger" value="Remove recipe" action="#{recipeEditBacking.delete}"></h:commandButton>
+                        <h:button styleClass="btn btn-default" immediate="true" value="Cancel" outcome="list"></h:button>
+                    </h:form>
+                </div>
+                <div class="col-xs-4"></div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
 </html>

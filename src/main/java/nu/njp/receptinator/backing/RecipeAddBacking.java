@@ -19,7 +19,7 @@ import java.util.Collection;
  * Created by Mattias on 2016-01-04.
  */
 
-@Named("recipesAdd")
+@Named("recipeAdd")
 @RequestScoped
 public class RecipeAddBacking extends BackingBase {
 
@@ -32,9 +32,6 @@ public class RecipeAddBacking extends BackingBase {
 
     @Inject
     CategoryServiceLocal categoryService;
-
-    @Inject
-    AccountServiceLocal accountService;
 
     @Inject
     AuthenticationProvider authenticationProvider;
@@ -86,8 +83,10 @@ public class RecipeAddBacking extends BackingBase {
         recipe.setCategory(categoryService.findCategory(categoryId));
         recipe.setCreated(new java.sql.Date(new java.util.Date().getTime()));
         JsfMessage result = recipesService.addRecipe(recipe);
-        setMessage(result);
-        return null;
+
+        if(result.getMessageType().equals(JsfMessage.MessageType.SUCCESS)) {
+            return "list";
+        } else { setMessage(result); return null; }
     }
 
 
