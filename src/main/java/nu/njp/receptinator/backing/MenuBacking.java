@@ -3,6 +3,7 @@ package nu.njp.receptinator.backing;
 import nu.njp.receptinator.core.AuthenticationProvider;
 import nu.njp.receptinator.core.pojo.JsfMenuItem;
 import nu.njp.receptinator.core.qualifier.DefaultLogger;
+import nu.njp.receptinator.entities.Account;
 import org.slf4j.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -36,12 +37,21 @@ public class MenuBacking {
         if(authenticationProvider.isAuthenticated()) {
             JsfMenuItem memberHome = new JsfMenuItem("Portal", "/member/index");
             JsfMenuItem recipes = new JsfMenuItem("Recipes", "/member/recipes/list");
+            if(authenticationProvider.getAccount().getPermission().equals(Account.Permission.ADMINISTRATOR)) {
+                JsfMenuItem accounts = new JsfMenuItem("[ADMIN]Accounts", "/admin/accounts/list");
+                JsfMenuItem categories = new JsfMenuItem("[ADMIN]Categories", "/admin/categories/list");
+                items.add(accounts);
+                items.add(categories);
+            }
             switch(viewId) {
                 case "/member/index.xhtml": memberHome.setActive(true); break;
                 case "/member/recipes/list.xhtml": recipes.setActive(true); break;
             }
             items.add(memberHome);
             items.add(recipes);
+
+
+
         } else {
             JsfMenuItem home = new JsfMenuItem("Home", "/index");
             JsfMenuItem login = new JsfMenuItem("Login", "/login");

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="/WEB-INF/templates/main.xhtml">
 
@@ -25,10 +25,10 @@
                         </h:button>
                     </h:panelGroup>
 
-                    <h:button value="Back" outcome="list" styleClass="btn btn-default"></h:button>
+                    <h:button value="Back" outcome="list" styleClass="btn btn-default" />
                     <h3>#{recipeViewBacking.recipe.recipeName}</h3>
                     <p>#{recipeViewBacking.recipe.recipeText}</p>
-                    <p class="bg-primary" style="font-style: italic; padding: 3px;">By: #{recipeViewBacking.recipe.account.firstName} #{recipeViewBacking.recipe.account.lastName}, category: #{recipeViewBacking.recipe.category.categoryName} [#{recipeViewBacking.recipe.created}]</p>
+                    <p class="bg-primary" style="font-style: italic; padding: 3px;">By: #{recipeViewBacking.recipe.account.userName} (#{recipeViewBacking.recipe.account.firstName} #{recipeViewBacking.recipe.account.lastName}), category: #{recipeViewBacking.recipe.category.categoryName} [#{recipeViewBacking.recipe.created}]</p>
 
 
                     <h4 style="margin-top: 40px;">Comments</h4>
@@ -39,10 +39,14 @@
                     </h:panelGroup>
 
                     <ui:repeat value="#{recipeViewBacking.comments}" var="comment">
-                        <div class="bg-warning" style="margin-top: 10px; padding: 3px;">
-                            <p style="margin-bottom: 5px;">#{comment.commentText}</p>
-                            <p style="font-style: italic; margin: 0px; color: #333;">By: #{comment.account.userName} [FIXA DATUM HÄR OCH TID]</p>
-                        </div>
+
+                            <div class="bg-warning" style="margin-top: 10px; padding: 3px;">
+                                <p style="margin-bottom: 5px;">#{comment.commentText}</p>
+                                <p style="font-style: italic; margin: 0px; color: #333;">By: #{comment.account.userName} [FIXA DATUM HÄR OCH TID]</p>
+                                <h:panelGroup rendered="#{comment.account.userName eq authenticationProvider.account.userName}">
+                                    <p style="margin: 2px;"><h:link outcome="/member/comments/edit" value="Edit"><f:param name="id" value="#{recipeViewBacking.recipe.recipeId}" /><f:param name="commentId" value="#{comment.commentId}" /></h:link></p>
+                                </h:panelGroup>
+                            </div>
                     </ui:repeat>
                 </div>
                 <div class="col-xs-2"></div>

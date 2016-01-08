@@ -3,6 +3,7 @@ package nu.njp.receptinator.backing;
 import nu.njp.receptinator.core.AuthenticationProvider;
 import nu.njp.receptinator.core.pojo.JsfMessage;
 import nu.njp.receptinator.core.qualifier.DefaultLogger;
+import nu.njp.receptinator.entities.BaseEntity;
 import nu.njp.receptinator.entities.Comment;
 import nu.njp.receptinator.entities.Recipe;
 import nu.njp.receptinator.interfaces.CommentServiceLocal;
@@ -59,10 +60,29 @@ public class CommentBacking extends BackingBase {
     }
 
     public String update() {
+        JsfMessage result = commentService.updateComment(comment);
+        if(result.getMessageType().equals(JsfMessage.MessageType.SUCCESS)) {
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../recipes/view.xhtml?id=" + recipe.getRecipeId());
+            } catch (IOException e) {
+                logger.error(e.getMessage());
+            }
+        }
+        setMessage(result);
         return null;
     }
 
     public String delete() {
+        comment.setStatus(BaseEntity.Status.INACTIVE);
+        JsfMessage result = commentService.updateComment(comment);
+        if(result.getMessageType().equals(JsfMessage.MessageType.SUCCESS)) {
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../recipes/view.xhtml?id=" + recipe.getRecipeId());
+            } catch (IOException e) {
+                logger.error(e.getMessage());
+            }
+        }
+        setMessage(result);
         return null;
     }
 
