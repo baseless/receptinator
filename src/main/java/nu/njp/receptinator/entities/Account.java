@@ -28,7 +28,7 @@ public class Account implements Serializable {
         permission = Permission.USER;
     }
 
-    public enum Status { ACTIVE, DELETED }
+    public enum Status { ACTIVE, INACTIVE }
     public enum Permission { USER, CONTRIBUTER, ADMINISTRATOR }
 
     @Id

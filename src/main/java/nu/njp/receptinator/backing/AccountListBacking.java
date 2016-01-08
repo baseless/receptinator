@@ -2,9 +2,7 @@ package nu.njp.receptinator.backing;
 
 import nu.njp.receptinator.entities.Account;
 import nu.njp.receptinator.interfaces.AccountServiceLocal;
-
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;

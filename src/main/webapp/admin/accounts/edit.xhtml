@@ -12,50 +12,63 @@
             <div class="row-fluid">
                 <div class="col-xs-4"></div>
                 <div class="col-xs-4">
-                    <h:form>
+                    <f:metadata>
+                        <f:viewParam name="id" value="#{accountEditBacking.account}" converter="#{accountConverter}"
+                                     converterMessage="Unknown account id."
+                                     required="true" requiredMessage="Bad request, please use a link from within the system."
+                        />
+                    </f:metadata>
+
+                    <c:if test="#{accountEditBacking.message ne null}">
+                        <c:if test="#{accountEditBacking.message.messageType.toString() eq 'ERROR'}">
+                            <div class="alert alert-danger"><span class="glyphicon glyphicon glyphicon-alert" style="padding-right: 6px;"></span><strong>#{accountEditBacking.message.messageTitle}</strong> #{accountEditBacking.message.messageDescription}</div>
+                        </c:if>
+                        <c:if test="#{accountEditBacking.message.messageType.toString() eq 'SUCCESS'}">
+                            <div class="alert alert-success"><span class="glyphicon glyphicon glyphicon-ok" style="padding-right: 6px;"></span><strong>#{accountEditBacking.message.messageTitle}</strong> #{accountEditBacking.message.messageDescription}</div>
+                        </c:if>
+                    </c:if>
+
+                    <h:form rendered="#{not empty accountEditBacking.account}">
 
                         <h3>Edit account</h3>
                         <div class="form-group">
                             <h:outputLabel value="Username"></h:outputLabel>
-                            <h:inputText id="userName" styleClass="form-control" value="#{accountEdit.account.userName}"></h:inputText>
+                            <h:inputText id="userName" styleClass="form-control" value="#{accountEditBacking.account.userName}"></h:inputText>
                             <h:message styleClass="label label-danger" for="userName" />
                         </div>
                         <div class="form-group">
                             <h:outputLabel value="First name"></h:outputLabel>
-                            <h:inputText id="firstName" styleClass="form-control" value="#{accountEdit.account.firstName}"></h:inputText>
+                            <h:inputText id="firstName" styleClass="form-control" value="#{accountEditBacking.account.firstName}"></h:inputText>
                             <h:message styleClass="label label-danger" for="firstName" />
                         </div>
                         <div class="form-group">
                             <h:outputLabel value="Last name"></h:outputLabel>
-                            <h:inputText id="lastName" styleClass="form-control" value="#{accountEdit.account.lastName}"></h:inputText>
+                            <h:inputText id="lastName" styleClass="form-control" value="#{accountEditBacking.account.lastName}"></h:inputText>
                             <h:message styleClass="label label-danger" for="lastName" />
                         </div>
                         <div class="form-group">
-                            <h:outputLabel value="Password"></h:outputLabel>
-                            <h:inputSecret id="newPassword" styleClass="form-control" value="#{accountEdit.newPassword}"></h:inputSecret>
-                            <h:message styleClass="label label-danger" for="newPassword" />
-                        </div>
-                        <div class="form-group">
                             <h:outputLabel value="Email address"></h:outputLabel>
-                            <h:inputText id="email" styleClass="form-control" value="#{accountEdit.account.email}"></h:inputText>
+                            <h:inputText id="email" styleClass="form-control" value="#{accountEditBacking.account.email}"></h:inputText>
                             <h:message styleClass="label label-danger" for="email" />
                         </div>
-
-                        <!--
                         <div class="form-group">
                             <h:outputLabel value="Status"></h:outputLabel>
-                            <h:selectOneListbox value="#{accountEdit.account.status}" styleClass="form-control">
-                                <f:selectItem itemValue="ACTIVE" />
-                                <f:selectItem itemValue="DELETED" />
-                            </h:selectOneListbox>
+                            <h:selectOneMenu id="statusMenu" styleClass="form-control" value="#{accountEditBacking.account.status}" >
+                                <f:selectItems value="#{accountEditBacking.statuses}" />
+                            </h:selectOneMenu>
+                            <h:message styleClass="label label-danger" for="statusMenu" />
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="Permission"></h:outputLabel>
+                            <h:selectOneMenu id="permissionMenu" styleClass="form-control" value="#{accountEditBacking.account.permission}" >
+                                <f:selectItems value="#{accountEditBacking.permissions}" />
+                            </h:selectOneMenu>
+                            <h:message styleClass="label label-danger" for="permissionMenu" />
                         </div>
 
-                        <div class="form-group">
-                            <h:selectOneListbox value="Permission" styleClass="form-control"></h:selectOneListbox>
-                        </div>
-                        -->
-                        <h:commandButton style="margin-right: 5px;" styleClass="btn btn-success" value="Update Account" action="#{accountEdit.update}"><f:ajax execute="@form" render="@form" /></h:commandButton>
-                        <h:button styleClass="btn btn-default" immediate="true" value="Cancel" outcome="/login"></h:button>
+                        <h:commandButton style="margin-right: 5px;" styleClass="btn btn-success" value="Update Account" action="#{accountEditBacking.update}"><f:ajax execute="@form" render="@form" /></h:commandButton>
+                        <h:commandButton style="margin-right: 5px;" styleClass="btn btn-danger" value="Delete Account" action="#{accountEditBacking.delete}"><f:ajax execute="@form" render="@form" /></h:commandButton>
+                        <h:button styleClass="btn btn-default" immediate="true" value="Cancel" outcome="list"></h:button>
                     </h:form>
                 </div>
                 <div class="col-xs-4"></div>

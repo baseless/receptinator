@@ -1,61 +1,32 @@
 package nu.njp.receptinator.backing;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import nu.njp.receptinator.core.pojo.JsfMessage;
 import nu.njp.receptinator.core.qualifier.DefaultLogger;
 import nu.njp.receptinator.entities.Account;
 import nu.njp.receptinator.interfaces.AccountServiceLocal;
 import org.slf4j.Logger;
-
-import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.persistence.Basic;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.Map;
 
 /**
- * Created by Mattias & Daniel on 2016-01-03.
+ * AccountList backing bean
+ * @author Daniel Ryhle <daniel@ryhle.se>
  */
-@Named("accountEdit")
+@ManagedBean
 @ViewScoped
 public class AccountEditBacking extends BackingBase{
+
+    @Inject
+    @DefaultLogger
+    private Logger logger;
+
     @Inject
     AccountServiceLocal accountService;
 
-    private Account account;
-
-    @Basic(optional = true)
-    @Size(min = 6, max = 200)
-    private String newPassword;
-
-    private int accountId = 0;
-
-    public AccountEditBacking() {
-        if(accountId == 0) {
-            try {
-                Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-                accountId = Integer.parseInt(params.get("id"));
-            } catch(Exception e) {}
-        }
-    }
-
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
-    }
+    private Account account = new Account();
 
     public Account getAccount() {
-        if(accountId != 0) {
-            account = accountService.findAccount(accountId);
-        }
         return account;
     }
 
@@ -64,8 +35,30 @@ public class AccountEditBacking extends BackingBase{
     }
 
     public String update() {
-        account.setPassword(newPassword);
-        accountService.updateAccount(account);
+        JsfMessage result = accountService.updateAccount(account);
+        setMessage(result);
         return null;
     }
+
+    public String delete() {
+        JsfMessage result = accountService.removeAccount(account.getAccountId());
+        if(!result.getMessageType().equals(JsfMessage.MessageType.SUCCESS)) {
+            setMessage(result);
+            return null;
+        } else {
+            return "list";
+        }
+    }
+
+    private Account.Status[] statuses;
+
+    public Account.Status[] getStatuses() { return Account.Status.values(); }
+
+    public void setStatuses(Account.Status[] statuses) {}
+
+    private Account.Permission[] permissions;
+
+    public Account.Permission[] getPermissions() { return Account.Permission.values(); }
+
+    public void setPermissions(Account.Permission[] permissions) {}
 }
