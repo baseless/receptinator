@@ -7,7 +7,24 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="/WEB-INF/templates/main.xhtml">
-
-
+    <ui:define name="content">
+        <h:form>
+            <div class="row-fluid">
+                <div class="col-xs-4"></div>
+                <div class="col-xs-4">
+                    <h:form>
+                        <h3>Update CategoryName</h3>
+                        <div class="form-group">
+                            <h:outputLabel value="CategoryName"></h:outputLabel>
+                            <h:inputText id="categoryName" styleClass="form-control" value="#{categoryEdit.category.categoryName}"></h:inputText>
+                            <h:message styleClass="label label-danger" for="categoryName" />
+                        </div>
+                        <h:commandButton style="margin-right: 5px;" styleClass="btn btn-success" value="Update Category" action="#{accountEdit.update}"><f:ajax execute="@form" render="@form" /></h:commandButton>
+                        <h:button styleClass="btn btn-default" immediate="true" value="Cancel" outcome="/login"></h:button>
+                    </h:form>
+                <div class="col-xs-4"></div>
+            </div>
+        </h:form>
+    </ui:define>
 </ui:composition>
 </html>
