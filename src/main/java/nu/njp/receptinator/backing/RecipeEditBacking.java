@@ -32,8 +32,6 @@ public class RecipeEditBacking extends BackingBase {
     @Inject
     AuthenticationProvider authenticationProvider;
 
-
-
     private Recipe recipe;
     private Collection<Category> categories;
     private int categoryId;
