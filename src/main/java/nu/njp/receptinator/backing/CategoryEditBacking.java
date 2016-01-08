@@ -7,6 +7,8 @@ import nu.njp.receptinator.interfaces.CategoryServiceLocal;
 import org.slf4j.Logger;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,8 +20,8 @@ import java.util.Map;
 /**
  * Created by Andreas on 2016-01-04.
  */
-@Named("categoryEdit")
-@RequestScoped
+@ManagedBean
+@ViewScoped
 public class CategoryEditBacking extends BackingBase {
 
     @Inject
