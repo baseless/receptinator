@@ -47,6 +47,8 @@ public class AccountService implements AccountServiceLocal {
         }
     }
 
+    //TEST COMMIT
+
     @Override
     public JsfMessage addAccount(Account account) {
         try {
