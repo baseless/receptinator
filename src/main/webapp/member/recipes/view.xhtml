@@ -28,7 +28,22 @@
                     <h:button value="Back" outcome="list" styleClass="btn btn-default"></h:button>
                     <h3>#{recipeViewBacking.recipe.recipeName}</h3>
                     <p>#{recipeViewBacking.recipe.recipeText}</p>
-                    <p class="bg-info" style="font-style: italic; padding: 3px;">By: #{recipeViewBacking.recipe.account.firstName} #{recipeViewBacking.recipe.account.lastName}, category: #{recipeViewBacking.recipe.category.categoryName} [#{recipeViewBacking.recipe.created}]</p>
+                    <p class="bg-primary" style="font-style: italic; padding: 3px;">By: #{recipeViewBacking.recipe.account.firstName} #{recipeViewBacking.recipe.account.lastName}, category: #{recipeViewBacking.recipe.category.categoryName} [#{recipeViewBacking.recipe.created}]</p>
+
+
+                    <h4 style="margin-top: 40px;">Comments</h4>
+                    <h:button value="Add new comment" outcome="/member/comments/add" styleClass="btn btn-default"><f:param name="id" value="#{recipeViewBacking.recipe.recipeId}" /></h:button>
+
+                    <h:panelGroup rendered="#{empty recipeViewBacking.comments}">
+                        <p style="margin-top: 15px; font-style: italic;">No comments for this recipe yet!</p>
+                    </h:panelGroup>
+
+                    <ui:repeat value="#{recipeViewBacking.comments}" var="comment">
+                        <div class="bg-warning" style="margin-top: 10px; padding: 3px;">
+                            <p style="margin-bottom: 5px;">#{comment.commentText}</p>
+                            <p style="font-style: italic; margin: 0px; color: #333;">By: #{comment.account.userName} [FIXA DATUM HÄR OCH TID]</p>
+                        </div>
+                    </ui:repeat>
                 </div>
                 <div class="col-xs-2"></div>
             </div>

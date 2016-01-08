@@ -6,6 +6,7 @@ import nu.njp.receptinator.entities.Comment;
 import nu.njp.receptinator.interfaces.CommentServiceLocal;
 import org.slf4j.Logger;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -15,6 +16,7 @@ import java.util.Collection;
 /**
  * Created by Andreas och Mattias on 2015-12-21.
  */
+@Stateless
 public class CommentService implements CommentServiceLocal {
 
     @PersistenceContext(unitName = "NewPersistenceUnit")
@@ -29,7 +31,8 @@ public class CommentService implements CommentServiceLocal {
             em.persist(comment);
             em.flush();
         } catch (Exception e) {
-            return new JsfMessage("Error creating comment!", "Error in creating comment, please try again.", JsfMessage.MessageType.ERROR);
+            logger.error(e.getMessage());
+            return new JsfMessage("Error creating comment!", "Error in creating comment, please try again. (" + e.getMessage() + ")", JsfMessage.MessageType.ERROR);
         }
         return new JsfMessage("Comment created!", "Comment successfully created.", JsfMessage.MessageType.SUCCESS);
     }
@@ -40,6 +43,7 @@ public class CommentService implements CommentServiceLocal {
             em.merge(comment);
             em.flush();
         } catch (NoResultException e) {
+            logger.error(e.getMessage());
             return new JsfMessage("Error updating comment!", "Error in updating comment, please try again.", JsfMessage.MessageType.ERROR);
         }
         return new JsfMessage("Category updated!", "Category successfully updated.", JsfMessage.MessageType.SUCCESS);
@@ -51,6 +55,7 @@ public class CommentService implements CommentServiceLocal {
             em.remove(em.find(Comment.class, commentId));
             em.flush();
         } catch (NoResultException e) {
+            logger.error(e.getMessage());
             return new JsfMessage("Error updating comment!", "Error in updating comment, please try again.", JsfMessage.MessageType.ERROR);
         }
         return new JsfMessage("Category deleted!", "Category successfully deleted.", JsfMessage.MessageType.SUCCESS);
@@ -66,6 +71,18 @@ public class CommentService implements CommentServiceLocal {
         Collection<Comment> result = null;
         try {
             result = em.createNamedQuery("getAllActiveComments", Comment.class).getResultList();
+            em.flush();
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+        }
+        return result;
+    }
+
+    @Override
+    public Collection<Comment> allCommentsForRecipe(int recipeId) {
+        Collection<Comment> result = null;
+        try {
+            result = em.createNamedQuery("getAllActiveCommentsForRecipe", Comment.class).setParameter("recipeId", recipeId).getResultList();
             em.flush();
         } catch (Exception e) {
             logger.warn(e.getMessage());

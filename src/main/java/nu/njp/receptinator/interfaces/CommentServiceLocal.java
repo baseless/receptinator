@@ -19,4 +19,6 @@ public interface CommentServiceLocal extends Serializable {
     JsfMessage removeComment(int commentId);
 
     Comment findComment(int commentId);
+
+    Collection<Comment> allCommentsForRecipe(int recipeId);
 }

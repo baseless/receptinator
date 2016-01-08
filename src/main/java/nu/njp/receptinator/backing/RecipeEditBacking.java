@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
- * AccountList backing bean
+ * Edit Recipe backing bean
  * @author Daniel Ryhle <daniel@ryhle.se>
  */
 @ManagedBean

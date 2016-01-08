@@ -7,11 +7,13 @@ import java.io.Serializable;
 
 /**
  * Created by Andreas and Mattias on 2015-12-18.
+ * Added named query //Daniel
  */
 @Entity
 @Table(name = "comments")
 @NamedQueries({
         @NamedQuery(name= "getAllActiveComments", query="SELECT c FROM Comment c WHERE c.status = 'ACTIVE'"),
+        @NamedQuery(name= "getAllActiveCommentsForRecipe", query="SELECT c FROM Comment c WHERE c.status = 'ACTIVE' AND c.recipe.recipeId = :recipeId")
 })
 public class Comment extends BaseEntity implements Serializable{
     @Id
@@ -19,6 +21,7 @@ public class Comment extends BaseEntity implements Serializable{
     @Column(name = "commentId")
     private int commentId;
     @Size(max=500)
+    @NotNull
     private String commentText;
 
     @ManyToOne(optional = false)
