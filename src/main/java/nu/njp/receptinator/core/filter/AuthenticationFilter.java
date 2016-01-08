@@ -2,6 +2,7 @@ package nu.njp.receptinator.core.filter;
 
 import nu.njp.receptinator.core.AuthenticationProvider;
 import nu.njp.receptinator.core.qualifier.DefaultLogger;
+import nu.njp.receptinator.entities.Account;
 import org.slf4j.Logger;
 import javax.inject.Inject;
 import javax.servlet.*;
@@ -18,7 +19,7 @@ import java.io.IOException;
 @WebFilter("/faces/*")
 public class AuthenticationFilter implements Filter {
 
-    //todo: LINKS MUST BE FIXED
+    //todo: path
     @Inject
     AuthenticationProvider auth;
 
@@ -40,8 +41,12 @@ public class AuthenticationFilter implements Filter {
 
         logger.info("Request for url '" + uri + "' from address " + request.getRemoteAddr());
 
-        if(uri.startsWith("/receptinator/faces/member") || uri.startsWith("/receptinator/faces/admin")) {
+        if(uri.startsWith("/receptinator/faces/member")) {
             if(auth.isAuthenticated()) {
+                allowed = true;
+            }
+        } else if(uri.startsWith("/receptinator/faces/admin")) {
+            if(auth.isAuthenticated() && auth.getAccount().getPermission().equals(Account.Permission.ADMINISTRATOR)) {
                 allowed = true;
             }
         } else {

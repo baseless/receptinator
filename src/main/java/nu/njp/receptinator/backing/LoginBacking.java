@@ -5,9 +5,12 @@ import nu.njp.receptinator.core.pojo.JsfMessage;
 import nu.njp.receptinator.core.qualifier.DefaultLogger;
 import org.slf4j.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.Basic;
+import javax.servlet.jsp.PageContext;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.IOException;
@@ -54,7 +57,8 @@ public class LoginBacking extends BackingBase {
 
     public String login() {
         if(authenticationProvider.authenticate(userName, password)) {
-            try { redirect("member/index.xhtml"); } catch (IOException e) { logger.error(e.getMessage()); }
+            String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+            try { redirect(path + "/faces/member/index.xhtml"); } catch (IOException e) { logger.error(e.getMessage()); } //todo: path
         } else {
             setMessage(new JsfMessage("Login failed!", "Please check your credentials and try again..", JsfMessage.MessageType.ERROR));
         }
