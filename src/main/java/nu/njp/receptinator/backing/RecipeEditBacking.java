@@ -2,6 +2,7 @@ package nu.njp.receptinator.backing;
 
 import nu.njp.receptinator.core.AuthenticationProvider;
 import nu.njp.receptinator.core.pojo.JsfMessage;
+import nu.njp.receptinator.entities.BaseEntity;
 import nu.njp.receptinator.entities.Category;
 import nu.njp.receptinator.entities.Recipe;
 import nu.njp.receptinator.interfaces.CategoryServiceLocal;
@@ -55,7 +56,7 @@ public class RecipeEditBacking extends BackingBase {
     }
 
     public String delete() {
-        //recipe.setStatus();
+        recipe.setStatus(BaseEntity.Status.INACTIVE);
         JsfMessage result = recipesService.updateRecipe(recipe);
         setMessage(result);
         if(result.getMessageType().equals(JsfMessage.MessageType.SUCCESS)) {
