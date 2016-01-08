@@ -20,7 +20,7 @@ import java.util.Map;
  */
 @Named("categoryEdit")
 @RequestScoped
-public class CategoryBacking extends BackingBase {
+public class CategoryEditBacking extends BackingBase {
 
     @Inject
     @DefaultLogger
@@ -30,17 +30,10 @@ public class CategoryBacking extends BackingBase {
     CategoryServiceLocal categoryService;
 
     private Category category;
-    private Collection<Category> categoryList;
 
-
-    public Category getCategory() {/*
-        FacesContext context = FacesContext.getCurrentInstance();
-        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        categoryId = Integer.parseInt(params.get("id"));
-        */
+    public Category getCategory() {
         if(category == null)
             category = new Category();
-            //category = categoryService.findCategory(categoryId);
         return category;
     }
 
@@ -48,24 +41,21 @@ public class CategoryBacking extends BackingBase {
         this.category = category;
     }
 
-    public Collection<Category> getCategoryList() {
-        categoryList = categoryService.allCategories();
-        return categoryList;
-    }
-
-    public void setCategoryList(Collection<Category> categoryList) {
-        this.categoryList = categoryList;
-    }
-
     public String addNewCategory(){
-
         JsfMessage result = categoryService.addCategory(category);
         setMessage(result);
         return null;
-        /*
-        if(category != null)
-            categoryService.addCategory(category);
-        return new JsfMessage("Category created!", "Category was successfully created", JsfMessage.MessageType.SUCCESS);
-        */
+    }
+
+    public String removeCategory() {
+        JsfMessage result = categoryService.removeCategory(category.getCategoryId());
+        setMessage(result);
+        return null;
+    }
+
+    public String editCategory() {
+        JsfMessage result = categoryService.updateCategory(category);
+        setMessage(result);
+        return null;
     }
 }
