@@ -91,7 +91,7 @@ public class AccountService implements AccountServiceLocal {
     @Override
     public JsfMessage updateAccount(Account account) {
         try {
-            account.setPassword(PasswordHasher.Hash256(account.getPassword(), account.getSalt()));
+            //account.setPassword(PasswordHasher.Hash256(account.getPassword(), account.getSalt()));
             em.merge(account);
         } catch (NoResultException e) {
             return new JsfMessage("Error updating account!", "Error in updating account, please try again.", JsfMessage.MessageType.ERROR);

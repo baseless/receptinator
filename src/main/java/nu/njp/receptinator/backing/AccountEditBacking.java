@@ -35,12 +35,14 @@ public class AccountEditBacking extends BackingBase{
     }
 
     public String update() {
+        System.out.println("-----------UPDATE---------------");
         JsfMessage result = accountService.updateAccount(account);
         setMessage(result);
         return null;
     }
 
     public String delete() {
+        System.out.println("------------DELETE--------------");
         JsfMessage result = accountService.removeAccount(account.getAccountId());
         if(!result.getMessageType().equals(JsfMessage.MessageType.SUCCESS)) {
             setMessage(result);
