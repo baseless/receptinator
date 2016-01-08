@@ -19,7 +19,7 @@
                         <th>Id</th>
                         <th>Name</th>
                     </tr>
-                    <ui:repeat value="#{categoryEdit.categoryList}" var="category">
+                    <ui:repeat value="#{categoryList.categoryList}" var="category">
                         <tr>
                             <td>
                                 <h:link value="#{category.categoryId}" outcome="edit">

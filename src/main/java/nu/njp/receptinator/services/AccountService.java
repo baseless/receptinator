@@ -2,11 +2,9 @@ package nu.njp.receptinator.services;
 
 import nu.njp.receptinator.core.pojo.JsfMessage;
 import nu.njp.receptinator.core.qualifier.DefaultLogger;
-import nu.njp.receptinator.core.qualifier.Mocked;
 import nu.njp.receptinator.core.util.PasswordHasher;
 import nu.njp.receptinator.core.util.PostMail;
 import nu.njp.receptinator.entities.Account;
-import nu.njp.receptinator.entities.Recipe;
 import nu.njp.receptinator.interfaces.AccountServiceLocal;
 import org.slf4j.Logger;
 
@@ -15,7 +13,6 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -37,7 +34,7 @@ public class AccountService implements AccountServiceLocal {
     public Account authenticate(String userName, String password) {
         Account selectedAcc;
         try {
-            selectedAcc = (Account) em.createNamedQuery("findIdByUserName").setParameter("userName", userName).getSingleResult();
+            selectedAcc = (Account) em.createNamedQuery("findActiveByUsername").setParameter("userName", userName).getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
@@ -66,7 +63,7 @@ public class AccountService implements AccountServiceLocal {
         Account selectedAcc;
         PostMail postMail = new PostMail();
         try {
-            selectedAcc = (Account) em.createNamedQuery("findIdByEmail").setParameter("email", email).getSingleResult();
+            selectedAcc = (Account) em.createNamedQuery("findAccountByEmail").setParameter("email", email).getSingleResult();
         } catch (NoResultException e) {
             return null;
         }

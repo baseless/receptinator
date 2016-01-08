@@ -15,8 +15,9 @@ import java.io.Serializable;
 @Entity
 @Table(name = "accounts")
 @NamedQueries({
-        @NamedQuery(name="findIdByUserName", query="SELECT c FROM Account c WHERE c.userName LIKE :userName"),
-        @NamedQuery(name="findIdByEmail", query="SELECT c FROM Account c WHERE c.email LIKE :email"),
+        @NamedQuery(name= "findAccountByUserName", query="SELECT c FROM Account c WHERE c.userName = :userName"),
+        @NamedQuery(name="findActiveByUsername", query="SELECT c FROM Account c WHERE c.userName = :userName AND c.status = 'ACTIVE'"),
+        @NamedQuery(name= "findAccountByEmail", query="SELECT c FROM Account c WHERE c.email = :email"),
         @NamedQuery(name="setPasswordById", query="UPDATE Account a SET a.password = :newPassword WHERE a.accountId = :accountId"),
         @NamedQuery(name="getAllAccounts", query="SELECT r FROM Account r"),
 })
@@ -29,7 +30,7 @@ public class Account implements Serializable {
     }
 
     public enum Status { ACTIVE, INACTIVE }
-    public enum Permission { USER, CONTRIBUTER, ADMINISTRATOR }
+    public enum Permission { USER, CONTRIBUTOR, ADMINISTRATOR }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
