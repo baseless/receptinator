@@ -27,6 +27,7 @@ public class CommentService implements CommentServiceLocal {
     public JsfMessage addComment(Comment comment) {
         try {
             em.persist(comment);
+            em.flush();
         } catch (Exception e) {
             return new JsfMessage("Error creating comment!", "Error in creating comment, please try again.", JsfMessage.MessageType.ERROR);
         }
@@ -37,6 +38,7 @@ public class CommentService implements CommentServiceLocal {
     public JsfMessage updateComment(Comment comment) {
         try {
             em.merge(comment);
+            em.flush();
         } catch (NoResultException e) {
             return new JsfMessage("Error updating comment!", "Error in updating comment, please try again.", JsfMessage.MessageType.ERROR);
         }
@@ -47,6 +49,7 @@ public class CommentService implements CommentServiceLocal {
     public JsfMessage removeComment(int commentId) {
         try {
             em.remove(em.find(Comment.class, commentId));
+            em.flush();
         } catch (NoResultException e) {
             return new JsfMessage("Error updating comment!", "Error in updating comment, please try again.", JsfMessage.MessageType.ERROR);
         }
@@ -62,7 +65,8 @@ public class CommentService implements CommentServiceLocal {
     public Collection<Comment> allComments() {
         Collection<Comment> result = null;
         try {
-            result = em.createNamedQuery("getAllComments", Comment.class).getResultList();
+            result = em.createNamedQuery("getAllActiveComments", Comment.class).getResultList();
+            em.flush();
         } catch (Exception e) {
             logger.warn(e.getMessage());
         }

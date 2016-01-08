@@ -12,9 +12,9 @@ import java.util.List;
 @Entity
 @Table(name = "categories")
 @NamedQueries({
-        @NamedQuery(name="getAllCategories", query = "SELECT c FROM Category c"),
+        @NamedQuery(name= "getAllActiveCategories", query = "SELECT c FROM Category c WHERE c.status = 'ACTIVE'"),
 })
-public class Category implements Serializable {
+public class Category extends BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +23,12 @@ public class Category implements Serializable {
 
     private String categoryName;
 
-    public Category() {
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private Status status;
 
+    public Category() {
+        status = Status.ACTIVE;
     }
 
     public Category(String categoryName) {
@@ -45,6 +49,14 @@ public class Category implements Serializable {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public String toString(){

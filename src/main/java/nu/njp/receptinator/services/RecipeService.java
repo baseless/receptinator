@@ -2,7 +2,6 @@ package nu.njp.receptinator.services;
 
 import nu.njp.receptinator.core.pojo.JsfMessage;
 import nu.njp.receptinator.core.qualifier.DefaultLogger;
-import nu.njp.receptinator.entities.Comment;
 import nu.njp.receptinator.entities.Recipe;
 import nu.njp.receptinator.interfaces.RecipeServiceLocal;
 import org.slf4j.Logger;
@@ -33,7 +32,8 @@ public class RecipeService implements RecipeServiceLocal {
     public Collection<Recipe> allRecipes() {
         Collection<Recipe> result = new ArrayList<>();
         try {
-            result = em.createNamedQuery("getAllRecipes", Recipe.class).getResultList();
+            result = em.createNamedQuery("getAllActiveRecipes", Recipe.class).getResultList();
+            em.flush();
         } catch (Exception e) {
             logger.warn(e.getMessage());
         }
@@ -49,6 +49,7 @@ public class RecipeService implements RecipeServiceLocal {
     public JsfMessage addRecipe(Recipe recipe) {
         try {
             em.persist(recipe);
+            em.flush();
         } catch (Exception e) {
             return new JsfMessage("Error creating recipe!", "Error in creating recipe, please try again.", JsfMessage.MessageType.ERROR);
         }
@@ -59,6 +60,7 @@ public class RecipeService implements RecipeServiceLocal {
     public JsfMessage removeRecipe(int recipeId) {
         try {
             em.remove(em.find(Recipe.class, recipeId));
+            em.flush();
         } catch (NoResultException e) {
             return new JsfMessage("Error updating recipe!", "Error in updating recipe, please try again.", JsfMessage.MessageType.ERROR);
         }
@@ -69,6 +71,7 @@ public class RecipeService implements RecipeServiceLocal {
     public JsfMessage updateRecipe(Recipe recipe) {
         try {
             em.merge(recipe);
+            em.flush();
         } catch (NoResultException e) {
             return new JsfMessage("Error updating recipe!", "Error in updating recipe, please try again.", JsfMessage.MessageType.ERROR);
         }

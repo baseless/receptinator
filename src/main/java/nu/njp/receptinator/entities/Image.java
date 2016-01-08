@@ -1,6 +1,7 @@
 package nu.njp.receptinator.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -9,9 +10,9 @@ import java.io.Serializable;
 @Entity
 @Table(name = "images")
 @NamedQueries({
-        @NamedQuery(name="getAllImages", query="SELECT i FROM Image i")
+        @NamedQuery(name= "getAllActiveImages", query="SELECT i FROM Image i WHERE i.status = 'ACTIVE'")
 })
-public class Image implements Serializable{
+public class Image extends BaseEntity implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +24,12 @@ public class Image implements Serializable{
     @JoinColumn(name = "recipeId")
     private Recipe recipe;
 
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private Status status;
+
     public Image() {
+        status = Status.ACTIVE;
     }
 
     public Image(String imageURL) {
@@ -52,5 +58,13 @@ public class Image implements Serializable{
 
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

@@ -35,6 +35,7 @@ public class AccountService implements AccountServiceLocal {
         Account selectedAcc;
         try {
             selectedAcc = (Account) em.createNamedQuery("findActiveByUsername").setParameter("userName", userName).getSingleResult();
+            em.flush();
         } catch (NoResultException e) {
             return null;
         }
@@ -52,6 +53,7 @@ public class AccountService implements AccountServiceLocal {
         try {
             account.setPassword(PasswordHasher.Hash256(account.getPassword(), account.getSalt()));
             em.persist(account);
+            em.flush();
         } catch (Exception e) {
             return new JsfMessage("Error creating account!", "Error in creating account, please try again.", JsfMessage.MessageType.ERROR);
         }
@@ -79,6 +81,7 @@ public class AccountService implements AccountServiceLocal {
     public JsfMessage removeAccount(int accountId) {
         try {
             em.remove(em.find(Account.class, accountId));
+            em.flush();
         } catch(Exception e){
             return new JsfMessage("Error removing account!", "Error in removing account, please try again.", JsfMessage.MessageType.ERROR);
         }
@@ -90,6 +93,7 @@ public class AccountService implements AccountServiceLocal {
         try {
             //account.setPassword(PasswordHasher.Hash256(account.getPassword(), account.getSalt()));
             em.merge(account);
+            em.flush();
         } catch (NoResultException e) {
             return new JsfMessage("Error updating account!", "Error in updating account, please try again.", JsfMessage.MessageType.ERROR);
         }
@@ -106,6 +110,7 @@ public class AccountService implements AccountServiceLocal {
         Collection<Account> result = new ArrayList<>();
         try {
             result = em.createNamedQuery("getAllAccounts", Account.class).getResultList();
+            em.flush();
         } catch (Exception e) {
             logger.warn(e.getMessage());
         }

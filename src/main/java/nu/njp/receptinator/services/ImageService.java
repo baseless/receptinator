@@ -30,6 +30,7 @@ public class ImageService implements ImageServiceLocal{
     public JsfMessage addImage(Image image) {
         try {
             em.persist(image);
+            em.flush();
         } catch (Exception e) {
             return new JsfMessage("Error creating Image!", "Error in creating image, please try again.", JsfMessage.MessageType.ERROR);
         }
@@ -40,6 +41,7 @@ public class ImageService implements ImageServiceLocal{
     public JsfMessage updateImage(Image image) {
         try {
             em.merge(image);
+            em.flush();
         } catch (NoResultException e) {
             return new JsfMessage("Error updating image!", "Error in updating image, please try again.", JsfMessage.MessageType.ERROR);
         }
@@ -50,6 +52,7 @@ public class ImageService implements ImageServiceLocal{
     public JsfMessage removeImage(int imageId) {
         try {
             em.remove(em.find(Image.class, imageId));
+            em.flush();
         } catch (NoResultException e) {
             return new JsfMessage("Error updating image!", "Error in updating image, please try again.", JsfMessage.MessageType.ERROR);
         }
@@ -60,7 +63,8 @@ public class ImageService implements ImageServiceLocal{
     public Collection<Image> allImages() {
         Collection<Image> result = null;
         try {
-            result = em.createNamedQuery("getAllImages", Image.class).getResultList();
+            result = em.createNamedQuery("getAllActiveImages", Image.class).getResultList();
+            em.flush();
         } catch (Exception e) {
             logger.warn(e.getMessage());
         }
