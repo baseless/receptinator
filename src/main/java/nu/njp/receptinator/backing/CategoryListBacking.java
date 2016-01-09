@@ -14,7 +14,7 @@ import java.util.Collection;
  * Created by Andreas on 2016-01-04.
  */
 
-@ManagedBean
+@Named("CategoryListBacking")
 @ViewScoped
 public class CategoryListBacking {
 

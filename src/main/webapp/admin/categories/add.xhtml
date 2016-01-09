@@ -16,12 +16,12 @@
                     <h:form>
                         <h3>Add Category</h3>
                         <div class="form-group">
-                            <h:outputLabel value="Category"></h:outputLabel>
-                            <h:inputText id="categoryName" styleClass="form-control" value="#{categoryEdit.category.categoryName}"></h:inputText>
+                            <h:outputLabel value="CategoryName"></h:outputLabel>
+                            <h:inputText id="categoryName" styleClass="form-control" value="#{categoryEditBacking.category.categoryName}"></h:inputText>
                             <h:message styleClass="label label-danger" for="categoryName" />
                         </div>
-                        <h:commandButton style="margin-right: 5px;" styleClass="btn btn-success" value="Add Category" action="#{categoryEdit.addNewCategory}"><f:ajax execute="@form" render="@form" /></h:commandButton>
-                        <h:button styleClass="btn btn-default" immediate="true" value="Cancel" outcome="/login"></h:button>
+                        <h:commandButton style="margin-right: 5px;" styleClass="btn btn-success" value="Add Category" action="#{categoryEditBacking.addNewCategory}"><f:ajax execute="@form" render="@form" /></h:commandButton>
+                        <h:button styleClass="btn btn-default" immediate="true" value="Cancel" outcome="/list"></h:button>
                     </h:form>
                 </div>
                 <div class="col-xs-4"></div>

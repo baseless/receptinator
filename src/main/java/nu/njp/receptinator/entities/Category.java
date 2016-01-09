@@ -21,6 +21,8 @@ public class Category implements Serializable {
     @Column(name = "categoryId")
     private int categoryId;
 
+    @NotNull
+    @Size(min = 3, max = 50)
     private String categoryName;
 
     public Category() {

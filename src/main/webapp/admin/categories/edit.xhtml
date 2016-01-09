@@ -9,20 +9,26 @@
 <ui:composition template="/WEB-INF/templates/main.xhtml">
     <ui:define name="content">
         <h:form>
-                <div class="col-xs-4"></div>
-                <div class="col-xs-4">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-8">
+                    <f:metadata>
+                        <f:viewParam name="id" value="#{categoryEditBacking.category}" converter="#{categoryConverter}"
+                                     converterMessage="Unknown category id."
+                                     required="true" requiredMessage="Bad request, please use a link from within the system."
+                        />
+                    </f:metadata>
                     <h:form>
-                        <h3>Update CategoryName</h3>
+                        <h3>Category</h3>
                         <div class="form-group">
-                            <h:outputLabel value="CategoryName"></h:outputLabel>
-                            <h:inputText id="categoryName" styleClass="form-control" value="#{CategoryEditBacking.category.categoryName}"></h:inputText>
+                            <h:outputLabel value="Category"></h:outputLabel>
+                            <h:inputText id="categoryName" styleClass="form-control" value="#{categoryEditBacking.category.categoryName}"></h:inputText>
                             <h:message styleClass="label label-danger" for="categoryName" />
                         </div>
-                        <h:commandButton style="margin-right: 5px;" styleClass="btn btn-success" value="Update Category" action="#{CategoryEditBacking.editCategory}"><f:ajax execute="@form" render="@form" /></h:commandButton>
-                        <h:commandButton style="margin-right: 5px;" styleClass="btn btn-danger" value="Delete Account" action="#{CategoryEditBacking.removeCategory}"></h:commandButton>
-                        <h:button styleClass="btn btn-default" immediate="true" value="Cancel" outcome="/login"></h:button>
+                        <h:commandButton style="margin-right: 5px;" styleClass="btn btn-success" value="Edit Category" action="#{categoryEditBacking.editCategory}"></h:commandButton>
+                        <h:commandButton style="margin-right: 5px;" styleClass="btn btn-danger" value="Remove Category" action="#{categoryEditBacking.removeCategory}"></h:commandButton>
+                        <h:button styleClass="btn btn-default" immediate="true" value="Cancel" outcome="/list"></h:button>
                     </h:form>
-                <div class="col-xs-4"></div>
+                <div class="col-xs-2"></div>
             </div>
         </h:form>
     </ui:define>
