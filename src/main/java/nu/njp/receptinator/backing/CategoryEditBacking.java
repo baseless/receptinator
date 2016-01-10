@@ -6,20 +6,15 @@ import nu.njp.receptinator.entities.Category;
 import nu.njp.receptinator.interfaces.CategoryServiceLocal;
 import org.slf4j.Logger;
 
-import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.persistence.Basic;
-import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * Created by Andreas on 2016-01-04.
  */
-@Named("categoryEdit")
-@RequestScoped
+@ManagedBean
+@ViewScoped
 public class CategoryEditBacking extends BackingBase {
 
     @Inject
@@ -29,7 +24,8 @@ public class CategoryEditBacking extends BackingBase {
     @Inject
     CategoryServiceLocal categoryService;
 
-    private Category category;
+
+    private Category category = new Category();
 
     public Category getCategory() {
         if(category == null)
@@ -44,18 +40,34 @@ public class CategoryEditBacking extends BackingBase {
     public String addNewCategory(){
         JsfMessage result = categoryService.addCategory(category);
         setMessage(result);
-        return null;
+        if(!result.getMessageType().equals(JsfMessage.MessageType.SUCCESS)) {
+            setMessage(result);
+            return null;
+        } else {
+            return "list";
+        }
     }
 
     public String removeCategory() {
-        JsfMessage result = categoryService.removeCategory(category.getCategoryId());
-        setMessage(result);
-        return null;
+        System.out.println("------------DELETE CATEGORY--------------");
+        JsfMessage result = categoryService.removeCategory(getCategory().getCategoryId());
+        if(!result.getMessageType().equals(JsfMessage.MessageType.SUCCESS)) {
+            setMessage(result);
+            return null;
+        } else {
+            return "list";
+        }
     }
 
     public String editCategory() {
         JsfMessage result = categoryService.updateCategory(category);
         setMessage(result);
-        return null;
+        if(!result.getMessageType().equals(JsfMessage.MessageType.SUCCESS)) {
+            setMessage(result);
+            return null;
+        } else {
+            return "list";
+        }
     }
+
 }

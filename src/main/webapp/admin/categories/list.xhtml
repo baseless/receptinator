@@ -8,8 +8,10 @@
 <f:view>
     <h:outputLabel value="CategoryList:"/>
 </f:view>
+
 <ui:composition template="/WEB-INF/templates/main.xhtml">
     <ui:define name="content">
+        <h:button style="margin-right: 5px;" styleClass="btn btn-default" immediate="true" value="Add new Category" outcome="add"></h:button>
         <div class="row-fluid">
             <div class="col-xs-2"></div>
             <div class="col-xs-8">
@@ -19,7 +21,7 @@
                         <th>Id</th>
                         <th>Name</th>
                     </tr>
-                    <ui:repeat value="#{categoryList.categoryList}" var="category">
+                    <ui:repeat value="#{CategoryListBacking.categoryList}" var="category">
                         <tr>
                             <td>
                                 <h:link value="#{category.categoryId}" outcome="edit">
