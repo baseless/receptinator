@@ -16,7 +16,7 @@ import java.io.IOException;
  * Servlet authentication filter
  * @author Daniel Ryhle <daniel@ryhle.se>
  */
-@WebFilter("/faces/*")
+@WebFilter("*")
 public class AuthenticationFilter implements Filter {
 
     //todo: path
@@ -41,11 +41,11 @@ public class AuthenticationFilter implements Filter {
 
         logger.info("Request for url '" + uri + "' from address " + request.getRemoteAddr());
 
-        if(uri.startsWith("/receptinator/faces/member")) {
+        if(uri.startsWith("/receptinator/faces/member") || uri.startsWith("/receptinator/member")) {
             if(auth.isAuthenticated()) {
                 allowed = true;
             }
-        } else if(uri.startsWith("/receptinator/faces/admin")) {
+        } else if(uri.startsWith("/receptinator/faces/admin") || uri.startsWith("/receptinator/admin")) {
             if(auth.isAuthenticated() && auth.getAccount().getPermission().equals(Account.Permission.ADMINISTRATOR)) {
                 allowed = true;
             }
@@ -56,7 +56,7 @@ public class AuthenticationFilter implements Filter {
         if(allowed) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            ((HttpServletResponse) servletResponse).sendRedirect("/receptinator/faces/notallowed.xhtml");
+            ((HttpServletResponse) servletResponse).sendRedirect("/receptinator/notallowed.xhtml");
         }
     }
 
