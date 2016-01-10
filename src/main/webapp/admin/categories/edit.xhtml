@@ -18,15 +18,15 @@
                         />
                     </f:metadata>
                     <h:form>
-                        <h3>Category</h3>
+                        <h3>Edit category</h3>
                         <div class="form-group">
                             <h:outputLabel value="Category"></h:outputLabel>
                             <h:inputText id="categoryName" styleClass="form-control" value="#{categoryEditBacking.category.categoryName}"></h:inputText>
                             <h:message styleClass="label label-danger" for="categoryName" />
                         </div>
-                        <h:commandButton style="margin-right: 5px;" styleClass="btn btn-success" value="Edit Category" action="#{categoryEditBacking.editCategory}"></h:commandButton>
+                        <h:commandButton style="margin-right: 5px;" styleClass="btn btn-success" value="Update Category" action="#{categoryEditBacking.editCategory}"></h:commandButton>
                         <h:commandButton style="margin-right: 5px;" styleClass="btn btn-danger" value="Remove Category" action="#{categoryEditBacking.removeCategory}"></h:commandButton>
-                        <h:button styleClass="btn btn-default" immediate="true" value="Cancel" outcome="/list"></h:button>
+                        <h:button styleClass="btn btn-default" immediate="true" value="Cancel" outcome="list"></h:button>
                     </h:form>
                 <div class="col-xs-2"></div>
             </div>
