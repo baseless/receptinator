@@ -41,6 +41,10 @@ public class AuthenticationFilter implements Filter {
 
         logger.info("Request for url '" + uri + "' from address " + request.getRemoteAddr());
 
+        if(uri.startsWith("/receptinator/faces/")) {
+            ((HttpServletResponse) servletResponse).sendRedirect("/receptinator/notallowed.xhtml");
+        }
+
         if(uri.startsWith("/receptinator/faces/member") || uri.startsWith("/receptinator/member")) {
             if(auth.isAuthenticated()) {
                 allowed = true;
