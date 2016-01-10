@@ -45,11 +45,11 @@ public class AuthenticationFilter implements Filter {
             ((HttpServletResponse) servletResponse).sendRedirect("/receptinator/notallowed.xhtml");
         }
 
-        if(uri.startsWith("/receptinator/faces/member") || uri.startsWith("/receptinator/member")) {
+        if(uri.startsWith("/receptinator/member")) {
             if(auth.isAuthenticated()) {
                 allowed = true;
             }
-        } else if(uri.startsWith("/receptinator/faces/admin") || uri.startsWith("/receptinator/admin")) {
+        } else if(uri.startsWith("/receptinator/admin")) {
             if(auth.isAuthenticated() && auth.getAccount().getPermission().equals(Account.Permission.ADMINISTRATOR)) {
                 allowed = true;
             }
