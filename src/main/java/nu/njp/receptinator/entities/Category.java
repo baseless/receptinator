@@ -16,6 +16,7 @@ import java.util.List;
 })
 public class Category extends BaseEntity implements Serializable {
 
+    //ta bort denna kommenteren.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "categoryId")
