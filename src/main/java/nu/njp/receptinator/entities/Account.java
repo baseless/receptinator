@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 
 /**
@@ -83,6 +84,7 @@ public class Account extends BaseEntity implements Serializable {
         this.userName = userName;
     }
 
+    @XmlTransient
     public String getSalt() {
         return salt;
     }
@@ -91,6 +93,7 @@ public class Account extends BaseEntity implements Serializable {
         this.salt = salt;
     }
 
+    @XmlTransient
     public String getPassword() {
         return password;
     }

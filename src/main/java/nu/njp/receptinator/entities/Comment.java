@@ -3,6 +3,7 @@ package nu.njp.receptinator.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 
 /**
@@ -60,6 +61,7 @@ public class Comment extends BaseEntity implements Serializable{
         this.commentText = commentText;
     }
 
+    @XmlTransient
     public Account getAccount() {
         return account;
     }

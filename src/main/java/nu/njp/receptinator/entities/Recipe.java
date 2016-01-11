@@ -3,6 +3,7 @@ package nu.njp.receptinator.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -79,6 +80,7 @@ public class Recipe extends BaseEntity implements Serializable {
         this.category = category;
     }
 
+    @XmlTransient
     public Account getAccount() {
         return account;
     }
