@@ -42,6 +42,7 @@ public class AuthenticationFilter implements Filter {
         logger.info("Request for url '" + uri + "' from address " + request.getRemoteAddr());
 
         if(uri.startsWith("/receptinator/faces/")) {
+            logger.warn("Tried to access a 'faces' url");
             ((HttpServletResponse) servletResponse).sendRedirect("/receptinator/notallowed.xhtml");
         }
 
@@ -60,6 +61,7 @@ public class AuthenticationFilter implements Filter {
         if(allowed) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
+            logger.warn("Invalid access attempt from ip address " + request.getRemoteAddr());
             ((HttpServletResponse) servletResponse).sendRedirect("/receptinator/notallowed.xhtml");
         }
     }
