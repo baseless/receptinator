@@ -51,6 +51,8 @@ public class AccountService implements AccountServiceLocal {
     @Override
     public JsfMessage addAccount(Account account) {
         try {
+            if(checkIfEmailExists(account.getEmail()))
+                return new JsfMessage("Error creating account!", "Error in creating account, email already exists.", JsfMessage.MessageType.ERROR);
             account.setPassword(PasswordHasher.Hash256(account.getPassword(), account.getSalt()));
             em.persist(account);
             em.flush();
@@ -117,6 +119,11 @@ public class AccountService implements AccountServiceLocal {
         return result;
     }
 
+    @Override
+    public boolean checkIfEmailExists(String email){
+        Account account = (Account) em.createNamedQuery("findAccountByEmail").setParameter("email", email).getSingleResult();
+        return account != null;
+    }
 
 }
 

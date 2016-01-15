@@ -47,6 +47,7 @@ public class CommentBacking extends BackingBase {
     public String insert() {
         comment.setAccount(authenticationProvider.getAccount());
         comment.setRecipe(recipe);
+        comment.setCreated(new java.sql.Date(new java.util.Date().getTime()));
         JsfMessage result = commentService.addComment(comment);
         if(result.getMessageType().equals(JsfMessage.MessageType.SUCCESS)) {
             try {

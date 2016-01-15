@@ -35,6 +35,8 @@ public class Recipe extends BaseEntity implements Serializable {
 
     private Date created;
 
+    private String pictureUrl;
+
     @Enumerated(EnumType.STRING)
     @NotNull
     private Status status;
@@ -95,6 +97,14 @@ public class Recipe extends BaseEntity implements Serializable {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 
     public Status getStatus() {

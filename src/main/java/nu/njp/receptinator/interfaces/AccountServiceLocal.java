@@ -34,4 +34,5 @@ public interface AccountServiceLocal extends Serializable {
     JsfMessage updateAccount(Account account);
     Account findAccount(int accountId);
     Collection<Account> allAccounts();
+    boolean checkIfEmailExists(String email);
 }

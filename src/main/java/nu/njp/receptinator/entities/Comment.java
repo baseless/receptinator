@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
+import java.sql.Date;
 
 /**
  * Created by Andreas and Mattias on 2015-12-18.
@@ -32,6 +33,8 @@ public class Comment extends BaseEntity implements Serializable{
     @ManyToOne (optional = false)
     @JoinColumn(name = "recipeId")
     private Recipe recipe;
+
+    private Date created;
 
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -76,6 +79,14 @@ public class Comment extends BaseEntity implements Serializable{
 
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
     public BaseEntity.Status getStatus() {

@@ -8,6 +8,9 @@ import org.slf4j.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
+import javax.persistence.Basic;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * AccountList backing bean
