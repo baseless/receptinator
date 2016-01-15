@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 
 /**
  * AccountList backing bean
- * @author Daniel Ryhle <daniel@ryhle.se>
+ * @author Daniel Ryhle <daniel@ryhle.se>;
  */
 @ManagedBean
 @ViewScoped
