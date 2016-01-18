@@ -27,6 +27,7 @@
 
                     <h:button value="Back" outcome="list" styleClass="btn btn-default" />
                     <h3>#{recipeViewBacking.recipe.recipeName}</h3>
+                    <img src="#{recipeViewBacking.recipe.pictureUrl}" alt="" />
                     <p>#{recipeViewBacking.recipe.recipeText}</p>
                     <p class="bg-primary" style="font-style: italic; padding: 3px;">By: #{recipeViewBacking.recipe.account.userName} (#{recipeViewBacking.recipe.account.firstName} #{recipeViewBacking.recipe.account.lastName}), category: #{recipeViewBacking.recipe.category.categoryName} [#{recipeViewBacking.recipe.created}]</p>
 

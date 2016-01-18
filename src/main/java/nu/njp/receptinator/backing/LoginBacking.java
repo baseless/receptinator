@@ -58,7 +58,7 @@ public class LoginBacking extends BackingBase {
     public String login() {
         if(authenticationProvider.authenticate(userName, password)) {
             String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-            try { redirect(path + "/member/index.xhtml"); } catch (IOException e) { logger.error(e.getMessage()); } //todo: path
+            try { redirect(path + "/index.xhtml"); } catch (IOException e) { logger.error(e.getMessage()); } //todo: path
         } else {
             setMessage(new JsfMessage("Login failed!", "Please check your credentials and try again..", JsfMessage.MessageType.ERROR));
         }
