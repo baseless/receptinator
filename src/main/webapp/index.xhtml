@@ -37,9 +37,6 @@
                                     <div class="bg-warning" style="margin-top: 10px; padding: 3px;">
                                         <p style="margin-bottom: 5px;">#{comment.commentText}</p>
                                         <p style="font-style: italic; margin: 0px; color: #333;">By: #{comment.account.userName} [#{comment.created}]</p>
-                                        <h:panelGroup rendered="#{comment.account.userName eq authenticationProvider.account.userName}">
-                                            <p style="margin: 2px;"><h:link outcome="/member/comments/edit" value="Edit"><f:param name="id" value="#{recipeViewBacking.recipe.recipeId}" /><f:param name="commentId" value="#{comment.commentId}" /></h:link></p>
-                                        </h:panelGroup>
                                     </div>
                                 </ui:repeat>
                             </div>
