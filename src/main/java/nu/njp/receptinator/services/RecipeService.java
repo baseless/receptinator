@@ -8,9 +8,7 @@ import org.slf4j.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -23,6 +21,17 @@ public class RecipeService implements RecipeServiceLocal {
 
     @PersistenceContext(unitName = "NewPersistenceUnit")
     private EntityManager em;
+
+    @Override
+    public JsfMessage addRecipe(Recipe recipe) {
+        try {
+            em.persist(recipe);
+            em.flush();
+        } catch (Exception e) {
+            return new JsfMessage("Error creating recipe!", "Error in creating recipe, please try again.", JsfMessage.MessageType.ERROR);
+        }
+        return new JsfMessage("Recipe created!", "Recipe successfully created.", JsfMessage.MessageType.SUCCESS);
+    }
 
     @Inject
     @DefaultLogger
@@ -45,16 +54,7 @@ public class RecipeService implements RecipeServiceLocal {
         return em.find(Recipe.class, recipeId);
     }
 
-    @Override
-    public JsfMessage addRecipe(Recipe recipe) {
-        try {
-            em.persist(recipe);
-            em.flush();
-        } catch (Exception e) {
-            return new JsfMessage("Error creating recipe!", "Error in creating recipe, please try again.", JsfMessage.MessageType.ERROR);
-        }
-        return new JsfMessage("Recipe created!", "Recipe successfully created.", JsfMessage.MessageType.SUCCESS);
-    }
+
 
     @Override
     public JsfMessage removeRecipe(int recipeId) {

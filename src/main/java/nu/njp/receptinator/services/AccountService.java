@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -121,7 +122,13 @@ public class AccountService implements AccountServiceLocal {
 
     @Override
     public boolean checkIfEmailExists(String email){
-        Account account = (Account) em.createNamedQuery("findAccountByEmail").setParameter("email", email).getSingleResult();
+        Account account;
+        try{
+            account = (Account) em.createNamedQuery("findAccountByEmail").setParameter("email", email).getSingleResult();
+        }catch(NoResultException e){
+            account = null;
+
+        }
         return account != null;
     }
 

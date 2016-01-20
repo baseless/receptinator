@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 @RequestScoped
 public class RegisterAccountBacking extends BackingBase {
 
-    @EJB
+    @Inject
     AccountServiceLocal accountServiceLocal;
 
     @Named("newAccount")
